@@ -7,6 +7,7 @@ Currently in the proof of concept stage.
 # Game mechanics that turtles can't do
 
 We might look at other mods that just vanilla and CC to fill these gaps.
+https://github.com/SirEdvin/ProgressivePeripherals
 
 * trade with villagers/piglins
 * mob spawning
@@ -18,6 +19,7 @@ We might look at other mods that just vanilla and CC to fill these gaps.
 * create golems and respawn the ender dragon?
 * go through a nether portal and end portal (maybe players get one turtle per dimention to start with? they could also each have enderchests to send items to each other)
 * claim chunks (command computer?)
+* modem activation, which means that turtles can't make networks and so item movement/storeage will be difficult
 
 # Should install some popular mods other than CC?
 
