@@ -13,7 +13,7 @@ https://github.com/SirEdvin/ProgressivePeripherals
 * mob spawning
 * chunkloading (could use a command computer setup or a peripheral mod that adds chunkloading turtles - or both)
 * use the new tables (such as the smithing table)
-* enchanting (turtles might not be able to interact with the table and don't have levels so can't anyways, turtles can use enchanted tools anyhow)
+* enchanting (turtles might not be able to interact with the table and don't have levels so can't anyways, turtles can't use enchanted tools anyhow)
 * potions (turtles can make them but can't use them and probably can't throw the splash potions)
 * anvils (turtles don't damage tools, so do we need to worry?)
 * create golems and respawn the ender dragon?
