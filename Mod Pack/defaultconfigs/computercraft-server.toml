@@ -56,10 +56,6 @@ command_require_creative = true
 	#Each rule is an item with a 'host' to match against, and a series of properties. The host may be a domain name ("pastebin.com"),
 	#wildcard ("*.pastebin.com") or CIDR notation ("127.0.0.0/8"). If no rules, the domain is blocked.
 	[[http.rules]]
-		host = "$private"
-		action = "deny"
-
-	[[http.rules]]
 		#The maximum size (in bytes) that a computer can send or receive in one websocket packet.
 		max_websocket_message = 131072
 		host = "*"
