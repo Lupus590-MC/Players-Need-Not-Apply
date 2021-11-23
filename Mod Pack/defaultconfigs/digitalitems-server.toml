@@ -1,0 +1,21 @@
+
+#Power settings
+[power]
+
+	#Item digitizer settings
+	[power.item_digitizer]
+		#Maximum power for the item digitizer
+		#Range: > 0
+		maxPower = 2000
+		#Power usage for the item digitizer to digitize an item stack
+		#Range: > 0
+		digitizeCost = 20
+		#Power usage for the item digitizer to rematerialize an item stack
+		#Range: > 0
+		rematerializeCost = 20
+		#Power usage for the item digitizer to get information about an item stack
+		#Range: > 0
+		checkCost = 10
+		#Toggles wether or not the item digitizer needs power to function
+		needsPower = false
+
