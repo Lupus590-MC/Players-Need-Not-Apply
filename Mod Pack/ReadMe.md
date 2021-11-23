@@ -18,6 +18,7 @@
     * easier prevention of mob spawning
 * Trash Cans
     * easier voiding of items, helps server health
+* JEI and Patchouli are included for development, other mods are required as dependencies
 
 # consideratios
 * a backup creation mod
@@ -29,3 +30,7 @@
     * lava storeage for turtle fuel
 * custom machinary
     * bucket filler/emptier
+* chunk loader
+    * turtles have them but players might want a cheap static chunk loader for bases
+    * I was going to provide a command computer service to use vanilla's force load command but crops won't grow in those
+        * might be able to find/make a mod that changes this behavour
