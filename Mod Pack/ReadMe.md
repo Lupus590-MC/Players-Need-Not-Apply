@@ -18,3 +18,14 @@
     * easier prevention of mob spawning
 * Trash Cans
     * easier voiding of items, helps server health
+
+# consideratios
+* a backup creation mod
+* charcoal block?
+    * turtle fuel more efficiently
+* tiny charcoal?
+    * smelting efficiently made easier
+* a fluid tank of some kind
+    * lava storeage for turtle fuel
+* custom machinary
+    * bucket filler/emptier
