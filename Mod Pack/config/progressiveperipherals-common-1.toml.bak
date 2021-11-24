@@ -1,0 +1,220 @@
+
+#No comment
+[Features]
+	enableRealityForger = true
+	enableStatueWorkbench = true
+	enableAbstractiumPedestal = true
+	enableRecipeRegistry = true
+	enableItemRegistry = true
+	enableEventDistributor = true
+	enableEnchantingAutomataCore = true
+	enableSmithingAutomataCore = true
+	enableBrewingAutomataCore = true
+	#Defines is scientific automata core is enabled. Do not disable it without understanding of mod progression logic!
+	enableScientificAutomataCore = true
+	enableCuttingAxe = true
+	enableExtractingPickaxe = true
+	enableCorrectingShovel = true
+	enableIrrealiumTools = true
+
+#No comment
+["Creative features"]
+	enableCreativeItemDuplicator = true
+
+#No comment
+[Restrictions]
+	#Range: 1 ~ 64
+	realityForgerRadius = 8
+	#Range: 1 ~ 256
+	realityForgerMK2Radius = 64
+	#Any block, that has tweak somehow it own model logic, should be here.
+	realityForgerBlacklist = ["progressiveperipherals:flexible_statue", "progressiveperipherals:flexible_reality_anchor", "progressiveperipherals:reality_breakthrough_point"]
+	#Range: > 5
+	abstractiumXPPointsCost = 20
+	#Range: > 1
+	xpToFuelRate = 10
+	#Range: 0.0 ~ 64.0
+	brewingXPReward = 0.8
+	#Range: > 1
+	enchantLevelCost = 30
+	#Range: 0.1 ~ 1.5
+	smeltFuelCostRate = 0.8
+	#Define max block count, that could be cut at once via Cutting axe. Don't set big numbers, it can cause server crashes
+	#Range: > 256
+	cuttingAxeMaxBlockCount = 1024
+	#Spawn chance per 10000 calls
+	#Range: 1 ~ 10000
+	breakthroughPointSpawnChance = 20
+	#Define allowed recipe registry reflection level, 0 is disabled at all
+	#Range: 0 ~ 8
+	recipeRegistryReflectionAllowedLevel = 2
+	#Define black listed method and fields for call
+	recipeRegistryReflectionBlacklist = []
+	#Define black listed recipes types for recipe registry
+	recipeRegistryTypesBlacklist = ["titanium:test_serializer", "immersiveengineering:blast_furnace_fuel", "immersiveengineering:fertilizer", "immersiveengineering:mineral_mix", "create:conversion", "industrialforegoing:stonework_generate", "pneumaticcraft:fuel_quality", "pneumaticcraft:heat_properties", "thermal:stirling_fuel", "thermal:compression_fuel", "thermal:magmatic_fuel", "thermal:numismatic_fuel", "thermal:lapidary_fuel", "thermal:tree_extractor_boost", "thermal:fisher_boost", "thermal:potion_diffuser_boost", "thermal:pulverizer_catalyst", "thermal:smelter_catalyst", "thermal:insolator_catalyst", "tconstruct:part_builder", "tconstruct:material", "tconstruct:tinker_station", "tconstruct:fuel", "tconstruct:severing", "tconstruct:data", "mana-and-artifice:manaweaving-pattern-type", "mana-and-artifice:runescribing-type", "mana-and-artifice:runeforging-type"]
+
+#No comment
+[Operations]
+	#Range: > 1000
+	smeltCooldown = 1
+	#Range: > 0
+	smeltCost = 80
+	#Range: > 0
+	xpTransferCooldown = 1000
+	#Range: > 0
+	xpTransferCost = 1
+	#Range: > 0
+	enchantmentCooldown = 5000
+	#Range: > 0
+	enchantmentCost = 10
+	#Range: > 0
+	smithCooldown = 1000
+	#Range: > 0
+	smithCost = 1
+	#Range: > 0
+	brewCooldown = 1000
+	#Range: > 0
+	brewCost = 5
+	#Range: > 0
+	throwPotionCooldown = 1000
+	#Range: > 0
+	throwPotionCost = 10
+	#Range: > 0
+	fillBottlesCooldown = 0
+	#Range: > 0
+	fillBottlesCost = 0
+	#Range: > 0
+	cureCooldown = 60000
+	#Range: > 0
+	cureCost = 50
+	#Range: > 1000
+	extractCooldown = 5000
+	#Range: > 1000
+	queryRegistryCooldown = 2000
+	#Range: > 1000
+	duplicateItemCooldown = 1000
+	#Range: > 1000
+	queueEventCooldown = 100
+	#Range: > 1000
+	exposeCooldown = 60000
+	#Range: > 0
+	exposeStartCost = 100
+	#Range: > 0
+	exposeTickCost = 10
+	#Range: 0.0 ~ 64.0
+	correctingShovelCost = 0.0
+	#Range: 0.0 ~ 64.0
+	correctingShovelCountMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	correctingShovelfortuneMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	correctingShovelsilkMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	cuttingAxeCost = 10.0
+	#Range: 0.0 ~ 64.0
+	cuttingAxeCountMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	cuttingAxefortuneMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	cuttingAxesilkMultiplier = 10.0
+	#Range: 0.0 ~ 64.0
+	extractingPickaxeCost = 1.0
+	#Range: 0.0 ~ 64.0
+	extractingPickaxeCountMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	extractingPickaxefortuneMultiplier = 1.0
+	#Range: 0.0 ~ 64.0
+	extractingPickaxesilkMultiplier = 4.0
+	#Range: 0.0 ~ 64.0
+	singleCost = 0.0
+	#Range: 0.0 ~ 64.0
+	singleCountMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	singlefortuneMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	singlesilkMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	voidingCost = 1.0
+	#Range: 0.0 ~ 64.0
+	voidingCountMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	voidingfortuneMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	voidingsilkMultiplier = 0.0
+	#Range: 0.0 ~ 64.0
+	ultimineCost = 1.0
+	#Range: 0.0 ~ 64.0
+	ultimineCountMultiplier = 0.5
+	#Range: 0.0 ~ 64.0
+	ultiminefortuneMultiplier = 1.0
+	#Range: 0.0 ~ 64.0
+	ultiminesilkMultiplier = 5.0
+	#Range: 0.0 ~ 64.0
+	voidingUltimineCost = 3.0
+	#Range: 0.0 ~ 64.0
+	voidingUltimineCountMultiplier = 0.5
+	#Range: 0.0 ~ 64.0
+	voidingUltiminefortuneMultiplier = 1.0
+	#Range: 0.0 ~ 64.0
+	voidingUltiminesilkMultiplier = 5.0
+
+#No comment
+[Machinery]
+	#Defines is reality breakthrough point extractor is enable. Do not disable it without understanding of mod progression logic!
+	enableExtractor = true
+	#Defines is reality breakthrough point reactor is enable. Do not disable it without understanding of mod progression logic!
+	enableReactor = true
+	#Defines amount of power that consumed from RBT point by one operation
+	#Range: 1 ~ 64
+	extractorConsumeAmount = 1
+	#Defines amount of product that produced by extractor by one operation
+	#Range: 1 ~ 64
+	extractorProduceAmount = 1
+	#Range: > 1
+	commonPointTierMinPower = 200
+	#Range: > 1
+	commonPointTierMaxPower = 400
+	#Range: > 1
+	commonPointTierEncryptLevels = 4
+
+#No comment
+[Puzzled]
+	#Range: 1 ~ 120
+	linearSystemTimeLimit = 2
+
+#No comment
+[Enderwire]
+	enderwireNetworkEnabled = true
+	#Range: > 1
+	enderwireNetworkRangeStep = 64
+	#Range: > 1
+	enderwireNetworkComputerButSize = 512
+	#Range: > 1
+	enderwireNetworkMaxElementCount = 512
+	#Range: > 1
+	enderwireNetworkMaxCountPerPlayer = 16
+	networkManagerEnderwireEnabled = true
+	peripheralSharingEnderwireEnabled = true
+	modemEnderwireEnabled = true
+	networkAmplifierEnderwireEnabled = true
+	dimensionBreakerEnderwireEnabled = true
+	leverEnderwireEnabled = true
+	buttonEnderwireEnabled = true
+	plateEnderwireEnabled = true
+	advancedLeverEnderwireEnabled = true
+	advancedButtonEnderwireEnabled = true
+	advancedPlateEnderwireEnabled = true
+	redstoneSensorEnderwireEnabled = true
+	redstoneEmitterEnderwireEnabled = true
+	lightEmitterEnderwireEnabled = true
+	turtleEnderwireEnabled = true
+
+#No comment
+["Automata cores"]
+	#Range: 1 ~ 64
+	tier3AutomataCoreInteractionRadius = 4
+	#Range: 1 ~ 32
+	tier3AutomataCoreMaxFuelConsumptionRate = 4
+	#Range: 0.1 ~ 1.0
+	enchantingAutomataCoreDisappearChance = 0.05
+
