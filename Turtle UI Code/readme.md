@@ -7,7 +7,7 @@
     "computerID": `number`
 }
 ```
-## comand responce
+## command responce
 ```json
 {
     "type": "commandResponce",
@@ -15,7 +15,7 @@
     "computerID": `number`
 }
 ```
-## comand
+## command
 ```json
 {
     "type": "command",
