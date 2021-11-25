@@ -6,7 +6,7 @@ local function main()
         if commandAsJsonString then
             local commandData = textutils.unserialiseJSON(commandAsJsonString)
             if commandData and commandData.computerID == os.getComputerID() and commandData.type == "command" then
-                local func, err = loadstring("return "..commandData.command)
+                local func, err = loadstring("return "..commandData.command) -- BUG: missing shell API
                 if func then
                     local returns = table.pack(pcall(func))
                     returns.n = nil

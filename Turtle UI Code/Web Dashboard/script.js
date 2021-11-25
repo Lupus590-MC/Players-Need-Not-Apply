@@ -3,12 +3,13 @@ jQuery(document).ready(function(){
     var responceField = $("#responce");
     var errorField = $("#error");
     var commandField = $("#command");
+    var submitButton = $("#submit");
 
 
     var ws = new WebSocket("ws://localhost:4000/test");
     ws.onmessage = function (evt) { 
         var received_msg = JSON.parse(evt.data);
-        console.log(received_msg);
+        //console.log(received_msg);
 
         responceField.val("");
         errorField.val("");
@@ -22,10 +23,21 @@ jQuery(document).ready(function(){
             errorField.val(errorMessageString);
         }
         else{
-
+            console.log("Unknown packet from pipe");
+            console.log(received_msg);
         }
 
      };
 
-     //ws.send(JSON.stringify({}));
+     submitButton.click(function(){
+         var command = commandField.val();
+         var commandPacket = { type: "command", command: command, computerID: 3}
+         
+         responceField.val("");
+         errorField.val("");
+
+         ws.send(JSON.stringify(commandPacket));
+     });
+
+
 });
