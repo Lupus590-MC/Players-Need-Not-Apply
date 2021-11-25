@@ -15,8 +15,11 @@ if mode == "snoop" then
         pretty.print(pretty.pretty(data))
     end
 elseif mode == "command" then
+    local commandHistory = {n=0}
     while true do
-        local command = read()
+        local command = read(nil, commandHistory)
+        commandHistory.n = commandHistory.n+1
+        commandHistory[commandHistory.n] = command
         local data = textutils.serialiseJSON({type = "command", command = command, computerID = 3})
         ws.send(data)
     end
