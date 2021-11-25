@@ -11,6 +11,6 @@
     * or could place them at a tree
 
 # respawning
-* players might run out of fuel and want to try again
+* players might run out of fuel and want to try again or otherwise brick their turtle
 * place chest of turtle's items?
 * void the turtle and its inventory?
