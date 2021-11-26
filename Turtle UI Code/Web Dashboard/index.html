@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-  <title>Hello, world!</title>
+  <title>ComputerCraft Control Center</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
@@ -10,18 +10,34 @@
 </head>
 
 <body>
-  <h1>Hello, world!</h1>
-  
-  <label for="command">Command:</label><br>
-  <input type="text" id="command" name="command"><br>
-  <input type="submit" id="submit" value="Submit"><br><br>
+  <h1>Control Center</h1>
 
+  <nav>
+    <!--TODO: move the target id bit to here once computer registration is implmented-->
+  </nav>
   
-  <label for="responce">Responce:</label><br>
-  <textarea rows="20" cols="80" name="responce" id="responce" readonly=true></textarea><br><br>
+  <section class="column">
+    <h2>Command and Respond</h2>
+    <label for="targetId">Target ID:</label><br>
+    <input type="number" id="targetId" name="targetId"><br>
+    
+    <label for="command">Command:</label><br>
+    <input type="text" id="command" name="command"><br>
+    <input type="submit" id="submit" value="Submit"><br><br>
+    
+    <label for="responce">Responce:</label><br>
+    <textarea rows="20" cols="100%" name="responce" id="responce" readonly=true></textarea><br><br>
 
-  <label for="error">Error:</label><br>
-  <textarea rows="20" cols="80" name="error" id="error" readonly=true></textarea>
+    <label for="error">Error:</label><br>
+    <textarea rows="20" cols="100%" name="error" id="error" readonly=true></textarea>
+  </section>
+
+  <section class="column">
+    <h2>Status</h2>
+
+    <label for="status">Status:</label><br>
+    <textarea rows="20" cols="100%" name="status" id="status" readonly=true></textarea><br><br>
+  </section>
 
 
   <script src="jquery-3.6.0.min.js"></script>

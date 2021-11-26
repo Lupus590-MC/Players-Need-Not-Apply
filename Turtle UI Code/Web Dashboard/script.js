@@ -1,9 +1,10 @@
 jQuery(document).ready(function(){
     var $ = jQuery;
-    var responceField = $("#responce");
-    var errorField = $("#error");
+    var targetIdField = $("#targetId");
     var commandField = $("#command");
     var submitButton = $("#submit");
+    var responceField = $("#responce");
+    var errorField = $("#error");
 
 
     var ws = new WebSocket("ws://localhost:4000/test");
@@ -30,8 +31,9 @@ jQuery(document).ready(function(){
      };
 
      submitButton.click(function(){
+         var targetId = parseInt(targetIdField.val());
          var command = commandField.val();
-         var commandPacket = { type: "command", command: command, computerID: 3}
+         var commandPacket = { type: "command", command: command, computerID: targetId};
          
          responceField.val("");
          errorField.val("");

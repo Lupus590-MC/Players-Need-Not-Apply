@@ -7,7 +7,7 @@ local function main()
         if commandAsJsonString then
             local commandData = textutils.unserialiseJSON(commandAsJsonString)
             if commandData and commandData.computerID == os.getComputerID() and commandData.type == "command" then
-                local env = setmetatable({}, { __index = _ENV }) -- inherit our env, posibly not a good idea
+                local env = setmetatable({}, { __index = _ENV }) -- inherit our env, possibly not a good idea
                 env._ENV = env
                 local func, err = load("return "..commandData.command, nil,  nil, env)
                 if func then
@@ -30,4 +30,7 @@ if not ok then
     local errAsJsonString = textutils.serialiseJSON({ type = "error", errorMessage = err, computerID = os.getComputerID(), terminal = true})
     ws.send(errAsJsonString)
     ws.close()
+    os.reboot() -- This is the bottom level program and in startup, rebooting when we error might help reconnect the computer to the control center
 end
+
+ws.close()
