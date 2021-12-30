@@ -11,6 +11,7 @@ https://github.com/SirEdvin/ProgressivePeripherals
 
 * trade with villagers/piglins
 * mob spawning
+  * mythical agriculture with many of the seeds disabled could fill various gaps
 * chunkloading (could use a command computer setup or a peripheral mod that adds chunkloading turtles - or both)
 * use the new tables (such as the smithing table)
 * enchanting (turtles might not be able to interact with the table and don't have levels so can't anyways, turtles can't use enchanted tools anyhow)

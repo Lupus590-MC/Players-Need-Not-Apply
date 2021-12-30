@@ -14,3 +14,8 @@
 * players might run out of fuel and want to try again or otherwise brick their turtle
 * place chest of turtle's items?
 * void the turtle and its inventory?
+
+# other
+* might want a websocket for chat
+* and another for anouncing when the server will restart etc.
+* maybe another for requesting chunk loading?
