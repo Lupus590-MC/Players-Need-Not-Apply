@@ -4,7 +4,7 @@ A minecraft server that players are not allowed on, instead they remote control 
 
 **Currently in the proof of concept stage.**
 
-# Game mechanics that turtles can't do
+## Game mechanics that turtles can't do
 
 We might look at other mods that just vanilla and CC to fill these gaps.
 https://github.com/SirEdvin/ProgressivePeripherals
@@ -22,13 +22,15 @@ https://github.com/SirEdvin/ProgressivePeripherals
 * claim chunks (command computer?)
 * modem activation, which means that turtles can't make networks and so item movement/storeage will be difficult
 
-# Should install some popular mods other than CC?
+## Should install some popular mods other than CC?
 
 * rf power could be nice
 * ore doubling?
 
-# Other things to consider
+## Other things to consider
 
 * weekly world export to spectator mode?
-    * someone's going to make a visual stucture eventually, we may as well let people enjoy them
-    * connecting to this server could also be the way that people get a turtle on the main world
+  * someone's going to make a visual stucture eventually, we may as well let people enjoy them
+  * connecting to this server could also be the way that people get a turtle on the main world
+* Advanced Peripherals is over powered
+  * modify AP?
