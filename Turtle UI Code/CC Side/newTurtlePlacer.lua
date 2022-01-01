@@ -3,11 +3,14 @@ local pretty = require("cc.pretty")
 -- TODO: find a nice spot to spawn
     -- Maybe remove saplings and other nice things after?
 
+-- TODO: tell the new turtle it's web socket
+    -- string.format("%08x", math.random(1, 2147483647)) is good enough from testing, I'm not going to have > 100000 players and even that didn't collide.
+
 local function spawnOverworldTurtle(x, y, z)
     x = x or "~"
     y = y or "~1"
     z = z or "~"
-    local returns = table.pack(commands.setBlock(x, y, z, "computercraft:turtle_advanced{Fuel: 1000, On: 1, LeftUpgrade:\"minecraft:diamond_pickaxe\", RightUpgrade: \"advancedperipherals:chunky_turtle\", Items: [{ id: \"minecraft:crafting_table\", Count: 1, Slot: 0 }, { id: \"minecraft:chest\", Count: 1, Slot: 1 },{ id: \"minecraft:birch_sapling\", Count: 10, Slot: 2}, { id: \"minecraft:spruce_sapling\", Count:10, Slot: 3 }, { id: \"minecraft:dirt\", Count:1, Slot: 4 }. { id: \"advancedperipherals:geo_scanner\", Count:1, Slot: 5 }]}"))
+    local returns = table.pack(commands.setBlock(x, y, z, "computercraft:turtle_advanced{Fuel: 1000, On: 1, LeftUpgrade:\"minecraft:diamond_pickaxe\", RightUpgrade: \"advancedperipherals:chunky_turtle\", Items: [{ id: \"minecraft:crafting_table\", Count: 1, Slot: 0 }, { id: \"minecraft:chest\", Count: 1, Slot: 1 },{ id: \"minecraft:birch_sapling\", Count: 10, Slot: 2}, { id: \"minecraft:spruce_sapling\", Count:10, Slot: 3 }, { id: \"minecraft:dirt\", Count:1, Slot: 4 }, { id: \"advancedperipherals:geo_scanner\", Count:1, Slot: 5 }]}"))
 
     --pretty.pretty_print(returns)
 end
