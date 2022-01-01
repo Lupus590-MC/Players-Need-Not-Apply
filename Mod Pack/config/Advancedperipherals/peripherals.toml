@@ -52,6 +52,9 @@
 	[Peripherals.RS_Bridge]
 		#Enable the Rs Bridge or not.
 		enableRsBridge = true
+		#Power consumption per tick.
+		#Range: > 0
+		rsPowerConsumption = 500
 
 	[Peripherals.Powered_Peripherals]
 		#Defines max energy storage in any powered peripheral
@@ -61,7 +64,7 @@
 		enablePoweredPeripherals = false
 
 	[Peripherals.NBT_Storage]
-		#Defines max nbt string that can be stored in nbt storage
+		#Defines max nbt string length that can be stored in nbt storage
 		#Range: > 0
 		nbtStorageMaxSize = 1048576
 		#Enable the nbt storage block or not
@@ -120,6 +123,9 @@
 		scanEntitiesMaxCostRadius = 16
 
 	[Peripherals.ME_Bridge]
+		#Power consumption per tick.
+		#Range: > 0
+		mePowerConsumption = 500
 		#Enable the Me Bridge or not.
 		enableMeBridge = true
 
