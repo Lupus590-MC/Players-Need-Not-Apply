@@ -8,7 +8,7 @@ jQuery(document).ready(function(){
 
     var urlParams = new URLSearchParams(window.location.search);
     var webSocketName = urlParams.get('ws') || "test";
-    console.log(webSocketName);
+    //console.log(webSocketName);
 
 
     var ws = new WebSocket("ws://localhost:4000/"+webSocketName);
