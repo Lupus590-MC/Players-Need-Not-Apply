@@ -6,8 +6,12 @@ jQuery(document).ready(function(){
     var responceField = $("#responce");
     var errorField = $("#error");
 
+    var urlParams = new URLSearchParams(window.location.search);
+    var webSocketName = urlParams.get('ws') || "test";
+    console.log(webSocketName);
 
-    var ws = new WebSocket("ws://localhost:4000/test");
+
+    var ws = new WebSocket("ws://localhost:4000/"+webSocketName);
     ws.onmessage = function (evt) { 
         var received_msg = JSON.parse(evt.data);
         //console.log(received_msg);
