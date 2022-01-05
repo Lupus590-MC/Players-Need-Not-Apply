@@ -1,6 +1,12 @@
 local endpoint = arg[1] or "test"
-local ws = http.websocket("ws://localhost:4000/"..endpoint)
+local websocketAddress = "ws://localhost:4000/"..endpoint
+local ws, err = http.websocket(websocketAddress)
+if not ws then
+	printError("Failed to connect to "..websocketAddress)
+	error(err)
+end
 -- TODO: make this easier to read
+-- TODO: announce self on the ws?
 
 local function main()
     while true do

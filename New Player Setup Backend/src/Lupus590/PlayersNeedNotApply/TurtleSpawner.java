@@ -67,12 +67,12 @@ public class TurtleSpawner {
         // write file on new computer with it's unique web socket address
 
         String setUpFilePath = Path.of(computercraftComputerFolderName, id.toString()).toString();
-        String setUpFileName = Path.of(setUpFilePath, "setUp").toString();
+        String setUpFileName = Path.of(setUpFilePath, "startup.lua").toString();
         File setUpFile = new File(setUpFilePath);
         setUpFile.mkdirs();
         FileWriter setUpFileWriter = new FileWriter(setUpFileName);
         UUID turtlesUuid = UUID.randomUUID();
-        setUpFileWriter.write(turtlesUuid.toString());
+        setUpFileWriter.write("shell.run(\"/rom/programs/websocket_repl.lua "+turtlesUuid.toString()+"\")");
         setUpFileWriter.close();
 
         File ackFile = new File(commandComputerAckFileName);
