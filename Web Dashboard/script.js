@@ -5,6 +5,7 @@ jQuery(document).ready(function(){
     var submitButton = $("#submit");
     var responceField = $("#responce");
     var errorField = $("#error");
+    var statusFields = {};
 
     var urlParams = new URLSearchParams(window.location.search);
     var webSocketName = urlParams.get('ws') || "test";

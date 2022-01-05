@@ -16,6 +16,12 @@
     <!--TODO: move the target id bit to here once computer registration is implmented-->
     <!--TODO: abuse readonly inputs as outputs less-->
   </nav>
+
+  <section>
+    <label for="notice">Notice:</label>
+    <input type="text" id="notice" name="notice" readonly=true><br>
+  </section>
+
   
   <section class="column">
     <h2>Command and Respond</h2>
@@ -36,8 +42,24 @@
   <section class="column">
     <h2>Status</h2>
 
-    <label for="status">Status:</label><br>
-    <textarea rows="20" cols="100%" name="status" id="status" readonly=true></textarea><br><br>
+    <label for="fuelLevel">Fuel Level:</label>
+    <input type="text" id="fuelLevel" name="fuelLevel" readonly=true><br><br>
+    
+    <label for="inventory">Inventory:</label>
+    <input type="text" id="inventory" name="inventory" readonly=true><br><br>
+    
+    <label for="equippedItems">Equipped Items:</label>
+    <input type="text" id="equippedItems" name="equippedItems" readonly=true><br><br>
+    
+    <label for="immediateSurroundings">Immediate Surroundings:</label>
+    <input type="text" id="immediateSurroundings" name="immediateSurroundings" readonly=true><br><br>
+    
+    <label for="position">Position:</label>
+    <input type="text" id="position" name="position" readonly=true><br><br>
+
+    <label for="unknownData">Unknown Data:</label><br>
+    <textarea rows="20" cols="100%" name="unknownData" id="unknownData" readonly=true></textarea><br><br>
+    
   </section>
 
 

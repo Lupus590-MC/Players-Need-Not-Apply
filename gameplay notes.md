@@ -25,3 +25,4 @@
 * and another for anouncing when the server will restart etc. (`pnna-serverInfo` websocket)
   * command blocks (and thus command computers) can't stop the server
 * maybe another for requesting chunk loading?
+* players by default can break/reprogram another player's turtle, this doesn't sound fair/fun for the player who loses said turtle
