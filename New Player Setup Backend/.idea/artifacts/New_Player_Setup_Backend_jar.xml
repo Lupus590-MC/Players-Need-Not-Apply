@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="New Player Setup Backend:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/New_Player_Setup_Backend_jar</output-path>
+    <root id="archive" name="New Player Setup Backend.jar">
+      <element id="module-output" name="New Player Setup Backend" />
+    </root>
+  </artifact>
+</component>
