@@ -26,7 +26,7 @@ public class NewPlayerSetupBackend {
                 return;
             }
 
-            UUID newPlayersUUID = turtleSpawner.spawnTurtle();
+            UUID newPlayersUUID = turtleSpawner.spawnTurtle(true);
             if (newPlayersUUID != null) {
                 System.out.println("new turtle's connection url: "+rootConnectionUrl+newPlayersUUID.toString()); // tell player their UUID
             } else {

@@ -25,16 +25,23 @@ public class TurtleSpawner {
     }
 
 
-    public UUID spawnTurtle() throws IOException, InterruptedException {
+    public UUID spawnTurtle(Boolean printTurtleId) throws IOException, InterruptedException {
         UUID newPlayersUUID = null;
         try{
             Integer turtleID = createTurtle();
             newPlayersUUID = setUpTurtle(turtleID);
+            if (printTurtleId) {
+                System.out.println("new turtle id: " + turtleID.toString());
+            }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace(); // cleanUpCreateTurtle should recover most of these
             throw e;
         }
         return newPlayersUUID;
+    }
+
+    public UUID spawnTurtle() throws IOException, InterruptedException {
+        return spawnTurtle(false);
     }
 
     private Integer createTurtle() throws IOException, InterruptedException {
