@@ -7,10 +7,37 @@ local expect = require("cc.expect")
 -- TODO: tell the new turtle it's web socket
     -- string.format("%08x", math.random(1, 2147483647)) is good enough from testing, I'm not going to have > 100000 players and even that didn't collide.
 
+-- simple best efort converts "~" to absolute coords because getBlockInfo wants that
+local function relativeCoordsToAbsolute(x, y, z)
+    expect.expect(1, x, "string", "number")
+    expect.expect(2, y, "string", "number")
+    expect.expect(3, z, "string", "number")
+
+    local commandX, commandY, commandZ = gps.locate()
+    local function singleCoordConverter(maybeRelative, origin)
+        if type(maybeRelative) == "string" and tonumber(maybeRelative) == nil then
+            maybeRelative = maybeRelative:gsub("~", "")
+            maybeRelative = tonumber(maybeRelative) or 0
+            if maybeRelative then
+                maybeRelative = origin + maybeRelative
+            end
+        end
+        return maybeRelative
+    end
+
+    x = tonumber(x) or singleCoordConverter(x, commandX)
+    y = tonumber(y) or singleCoordConverter(y, commandY)
+    z = tonumber(z) or singleCoordConverter(z, commandZ)
+
+    return x, y, z
+end
+
 local function getComputerID(x, y, z)
     expect.expect(1, x, "string", "number")
     expect.expect(2, y, "string", "number")
     expect.expect(3, z, "string", "number")
+
+    local x, y, z = relativeCoordsToAbsolute(x, y, z)
 
     local computerData = commands.getBlockInfo(x, y, z)
     if computerData and computerData.nbt and computerData.nbt.ComputerId then
@@ -39,7 +66,7 @@ local function spawnOverworldTurtle(x, y, z)
     local returns = table.pack(commands.setBlock(x, y, z, "computercraft:turtle_advanced{Fuel: 1000, On: 1, LeftUpgrade:\"minecraft:diamond_pickaxe\", RightUpgrade: \"advancedperipherals:chunky_turtle\", Items: [{ id: \"minecraft:crafting_table\", Count: 1, Slot: 0 }, { id: \"minecraft:chest\", Count: 1, Slot: 1 },{ id: \"minecraft:birch_sapling\", Count: 10, Slot: 2}, { id: \"minecraft:spruce_sapling\", Count:10, Slot: 3 }, { id: \"minecraft:dirt\", Count:1, Slot: 4 }, { id: \"computercraft:wireless_modem\", Count:1, Slot: 5 }]}"))
 
     --pretty.pretty_print(returns)
-
+    sleep(1)
     return getComputerID(x, y, z)
 end
 
@@ -59,15 +86,17 @@ end
 
 local function listenMode()
     while true do
+        fs.delete("request")
+        fs.delete("response")
+        fs.delete("ack")
         repeat
             sleep() -- TODO: better wait, this is probably going to be sleeping here most of the time, perhaps use a websocket to wake it up?
         until fs.exists("request")
         local turtleID = spawnOverworldTurtle()
-        io.open("responce", "w"):write(turtleID):close()
+        io.open("response", "w"):write(turtleID):close()
         repeat
             sleep()
-        until not fs.exists("request")
-        fs.delete("responce")
+        until fs.exists("ack")
     end
 end
 
@@ -80,4 +109,5 @@ elseif arg[1] == "listen" then
 else
     print(arg[0].." overworld")
     print(arg[0].." other")
+    print(arg[0].." listen")
 end
