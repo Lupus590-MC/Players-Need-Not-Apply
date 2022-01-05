@@ -19,6 +19,7 @@ public class NewPlayerSetupBackend {
         TurtleSpawner turtleSpawner = new TurtleSpawner(computercraftComputerFolderPath, commandComputerId);
 
         while (true) {
+            // TODO: discord bot?
             System.out.println("press enter to spawn new turtle (q to quit)"); // wait for signal to spawn new turtle
             String input = keyboardScanner.nextLine();
             if (input.equalsIgnoreCase("q")){
