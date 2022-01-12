@@ -7,6 +7,7 @@ if not ws then
 end
 -- TODO: make this easier to read
 -- TODO: announce self on the ws?
+-- TODO: don't assume that ws is seccure, verify that message is from control center or toher trusted source - https://gist.github.com/MCJack123/7752c85918bcf23ada028abd615e8750
 
 local function main()
     while true do
