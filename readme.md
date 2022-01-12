@@ -1,8 +1,10 @@
 #  Players Need Not Apply
 
-A minecraft server that players are not allowed on, instead they remote control turtles from the ComputerCraft mod. 
+A minecraft server that players are not allowed on, instead they remote control turtles from the ComputerCraft mod.
 
 **Currently in the proof of concept stage.**
+
+<!-- NOTE: recomended by Wojbie on discord as a server host https://www.oracle.com/cloud/free/#always-free -->
 
 ## Game mechanics that turtles can't do
 
