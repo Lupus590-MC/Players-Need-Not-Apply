@@ -1,15 +1,15 @@
-#  Players Need Not Apply
+# Players Need Not Apply
 
 A minecraft server that players are not allowed on, instead they remote control turtles from the ComputerCraft mod.
 
 **Currently in the proof of concept stage.**
 
-<!-- NOTE: recomended by Wojbie on discord as a server host https://www.oracle.com/cloud/free/#always-free -->
+<!-- NOTE: recomended by Wojbie on discord as a server host https://www.oracle.com/cloud/free/#always-free not all server locations stay free after the trial so it might be a good idea to check with Wojbie when setting up -->
 
 ## Game mechanics that turtles can't do
 
 We might look at other mods that just vanilla and CC to fill these gaps.
-https://github.com/SirEdvin/ProgressivePeripherals
+[progressive peripherals](https://github.com/SirEdvin/ProgressivePeripherals)
 
 * trade with villagers/piglins
 * mob spawning
