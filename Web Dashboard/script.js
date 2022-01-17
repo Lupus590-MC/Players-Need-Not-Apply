@@ -22,6 +22,29 @@ jQuery(document).ready(function(){
         }
     });
 
+    var removeSpecificTabButton = $("#remove-specific-tab");
+    var specificTabToRemove = $("#specific-tab-to-remove");
+    removeSpecificTabButton.click(function(){
+        if(tabNumber>1 && specificTabToRemove.val() !== ""){
+            tabs.children("ul").children().children().each(
+                function(index , tab){
+                    if(tab.text === specificTabToRemove.val()){
+                        tabNumber-=1;
+                        tabs.children("ul").children()[index].remove();
+                        tabs.children()[index+1].remove();
+                        tabs.tabs("refresh");
+                    }
+                }
+            );
+
+
+            // tabNumber-=1;
+            // tabs.children("ul").children(specificTabToRemove.val()).remove();
+            // tabs.children()[tabNumber+1].remove();
+            // tabs.tabs("refresh");
+        }
+    });
+
 
     var targetIdField = $("#targetId");
     var commandField = $("#command");
