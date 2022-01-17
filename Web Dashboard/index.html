@@ -20,76 +20,63 @@
   <!--TODO: abuse readonly inputs as outputs less-->
   <!--TODO: a way to send terminate event and restart the computer (like ctrl+r)-->
 
-  <nav id="tabs">
-    <ul>
-      <li><a href="#tabs-1">Nunc tincidunt</a></li>
-      <li><a href="#tabs-2">Proin dolor</a></li>
-      <li><a href="#tabs-3">Aenean lacinia</a></li>
-    </ul>
-    <articals id="tabs-1">
-      <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
-    </articals>
-    <articals id="tabs-2">
-      <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-    </articals>
-    <articals id="tabs-3">
-      <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-      <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
-    </articals>
-  </nav>
-
-  <br>
-
+  <section style="display: none;"> <!--TODO what was I doing with this?-->
+    <label for="notice">Notice:</label>
+    <input type="text" id="notice" name="notice" readonly=true><br>
+  </section>
 
   <input type="button" id="new-tab" value="New Tab"><br>
   <input type="button" id="remove-tab" value="Remove Tab"><br>
   <input type="button" id="remove-specific-tab" value="Remove Specific Tab"> <input type="text" id="specific-tab-to-remove" name="specific-tab-to-remove"><br><br>
 
-  <section>
-    <label for="notice">Notice:</label>
-    <input type="text" id="notice" name="notice" readonly=true><br>
-  </section>
+  <nav id="tabs">
+    <ul>
+    </ul>
+  </nav>
+
+  <br>
 
 
-  <section class="column">
-    <h2>Command and Respond</h2>
-    <label for="targetId">Target ID:</label>
-    <input type="number" id="targetId" name="targetId"><br>
+  <article id="template" style="display: none;">
+    <section class="column">
+      <h2>Command and Respond</h2>
+      <label for="targetId">Target ID:</label>
+      <input type="number" id="targetId" name="targetId"><br>
 
-    <label for="command">Command:</label>
-    <input type="text" id="command" name="command"><br>
-    <input type="submit" id="submit" value="Submit"><br><br>
+      <label for="command">Command:</label>
+      <input type="text" id="command" name="command"><br>
+      <input type="submit" id="submit" value="Submit"><br><br>
 
-    <label for="responce">Responce:</label><br>
-    <textarea rows="20" cols="100%" name="responce" id="responce" readonly=true></textarea><br><br>
+      <label for="responce">Responce:</label><br>
+      <textarea rows="20" cols="100%" name="responce" id="responce" readonly=true></textarea><br><br>
 
-    <label for="error">Error:</label><br>
-    <textarea rows="20" cols="100%" name="error" id="error" readonly=true></textarea>
-  </section>
+      <label for="error">Error:</label><br>
+      <textarea rows="20" cols="100%" name="error" id="error" readonly=true></textarea>
+    </section>
 
-  <section class="column">
-    <h2>Status</h2>
+    <section class="column" style="display: none'"> <!--TODO: finish status system-->
+      <h2>Status</h2>
 
-    <label for="fuelLevel">Fuel Level:</label>
-    <input type="text" id="fuelLevel" name="fuelLevel" readonly=true><br><br>
+      <label for="fuelLevel">Fuel Level:</label>
+      <input type="text" id="fuelLevel" name="fuelLevel" readonly=true><br><br>
 
-    <label for="inventory">Inventory:</label>
-    <input type="text" id="inventory" name="inventory" readonly=true><br><br>
+      <label for="inventory">Inventory:</label>
+      <input type="text" id="inventory" name="inventory" readonly=true><br><br>
 
-    <label for="equippedItems">Equipped Items:</label>
-    <input type="text" id="equippedItems" name="equippedItems" readonly=true><br><br>
+      <label for="equippedItems">Equipped Items:</label>
+      <input type="text" id="equippedItems" name="equippedItems" readonly=true><br><br>
 
-    <label for="immediateSurroundings">Immediate Surroundings:</label>
-    <input type="text" id="immediateSurroundings" name="immediateSurroundings" readonly=true><br><br>
+      <label for="immediateSurroundings">Immediate Surroundings:</label>
+      <input type="text" id="immediateSurroundings" name="immediateSurroundings" readonly=true><br><br>
 
-    <label for="position">Position:</label>
-    <input type="text" id="position" name="position" readonly=true><br><br>
+      <label for="position">Position:</label>
+      <input type="text" id="position" name="position" readonly=true><br><br>
 
-    <label for="unknownData">Unknown Data:</label><br>
-    <textarea rows="20" cols="100%" name="unknownData" id="unknownData" readonly=true></textarea><br><br>
+      <label for="unknownData">Unknown Data:</label><br>
+      <textarea rows="20" cols="100%" name="unknownData" id="unknownData" readonly=true></textarea><br><br>
 
-  </section>
-
+    </section>
+  </article>
 
   <script src="jquery-ui-1.13.0.custom/external/jquery/jquery.js"></script>
   <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
