@@ -20,7 +20,7 @@ Recived packet was not understood or running program has encountered an error.  
 ```json
 {
     "type": "commandResponce",
-    "responce": [bool, `any`, ...],
+    "responce": [`bool`, `any`, ...],
     "computerID": `number`
 }
 ```
@@ -37,7 +37,7 @@ The first value of `responce` is from pcall, we can use this to know if the comm
         "inventory": [`object of item data`, ...],
         "equippedItems": {"left": `object of item data`, "right": ...},
         "immediateSurroundings": {"up": `object of block info`, "down": ..., "front":...},
-        "position": {"x": `number`, "y": `number`, "z": `number`, "dim": `string`
+        "position": {"x": `number`, "y": `number`, "z": `number`, "dim": `string`}
     },
     "computerID": `number`
 }
