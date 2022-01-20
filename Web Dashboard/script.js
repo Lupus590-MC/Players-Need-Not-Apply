@@ -3,15 +3,35 @@ jQuery(document).ready(function(){
 
     var tabs = $("#tabs");
     tabs.tabs();
+
+    /**
+     * create a new tab for the new computer and set it up
+     * @param  {number} ccComputerID
+     * @param  {string} [ccComputerLabel]
+     */
+    function onNewConnection(ccComputerID, ccComputerLabel) {
+        if(ccComputerLabel === undefined || ccComputerLabel === null || ccComputerLabel === ""){
+            ccComputerLabel = "";
+        }else{
+            ccComputerLabel = ccComputerLabel + " - ";
+        }
+
+        tabs.children("ul").append("<li><a href=\"#computer-"+ccComputerID+"\">"+ccComputerLabel+"#"+ccComputerID+"</a></li>");
+        var clonedTemplate = $("#template").clone();
+        clonedTemplate.attr("id", "computer-"+ccComputerID);
+        clonedTemplate.appendTo(tabs);
+        tabs.tabs("refresh");
+    }
+
+
     var newTabButton = $("#new-tab");
     var tabNumber = 0;
     newTabButton.click(function(){
         tabNumber+=1;
-        tabs.children("ul").append("<li><a href=\"#template-"+tabNumber+"\">Tab"+tabNumber+"</a></li>");
-        var clonedTemplate = $("#template").clone();
-        clonedTemplate.attr("id", "template-"+tabNumber);
-        clonedTemplate.appendTo(tabs);
-        tabs.tabs("refresh");
+        onNewConnection(tabNumber);
+
+        tabNumber+=1;
+        onNewConnection(tabNumber, "test");
     });
 
 
@@ -80,6 +100,8 @@ jQuery(document).ready(function(){
 
      };
 
+
+     // TODO: rewrite https://stackoverflow.com/questions/17451660/one-click-event-handler-for-multiple-buttons
      submitButton.click(function(){
          var targetId = parseInt(targetIdField.val());
          var command = commandField.val();
