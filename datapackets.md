@@ -20,7 +20,7 @@ Recived packet was not understood or running program has encountered an error.  
 ```json
 {
     "type": "commandResponce",
-    "responce": [bool, `any`, ...],
+    "responce": [`bool`, `any`, ...],
     "computerID": `number`
 }
 ```
