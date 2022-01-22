@@ -10,6 +10,7 @@ jQuery(document).ready(function(){
      * @param  {string} [ccComputerLabel]
      */
     function onNewConnection(ccComputerID, ccComputerLabel) {
+        //TODO: check if it has a tab already, it might have recovered from a crash and rebooted
         console.debug("Making tab for new connection with data: ", {ccComputerID, ccComputerLabel});
 
         if(ccComputerLabel === undefined || ccComputerLabel === null || ccComputerLabel === ""){
@@ -34,7 +35,13 @@ jQuery(document).ready(function(){
         console.log("Connected");
         console.debug(evt);
 
+        // ask any already connected CC computers to annouce themselves so that we know about them
+        let soundOffPacket = {type: "soundOff"};
+        ws.send(JSON.stringify(soundOffPacket));
     };
+
+
+
 
     //TODO: maybe use alert boxes for when the REPL errors?
     //TODO: rewrite to handle the tab system
@@ -61,6 +68,11 @@ jQuery(document).ready(function(){
         else if(received_msg.type == "error"){
             let errorMessageString = JSON.stringify(received_msg.errorMessage);
             errorField.val(errorMessageString);
+        }
+        else if(received_msg.type == "soundOffResponse"){
+            let ccComputerId = received_msg.computerId;
+            let ccComputerLabel = received_msg.computerLabel;
+            onNewConnection(ccComputerId, ccComputerLabel);
         }
         else{
             console.warn("Unknown packet from pipe");

@@ -11,6 +11,10 @@ end
 -- TODO: commands can be dropped if the computer is running a command already and happens to pull an event
 
 local function main()
+	local errAsJsonString = textutils.serialiseJSON({ type = "soundOffResponse", computerId = os.getComputerID(), label = os.getComputerLabel() })
+	ws.send(errAsJsonString)
+	print("connected")
+
     while true do
         local commandAsJsonString = ws.receive()
         if commandAsJsonString then
@@ -28,6 +32,10 @@ local function main()
                     local errAsJsonString = textutils.serialiseJSON({ type = "error", errorMessage = err, computerID = os.getComputerID(), terminal = false })
                     ws.send(errAsJsonString)
                 end
+			elseif commandData and commandData.type == "soundOff" then
+				local errAsJsonString = textutils.serialiseJSON({ type = "soundOffResponse", computerId = os.getComputerID(), label = os.getComputerLabel() })
+                ws.send(errAsJsonString)
+				print("sounding off")
             end
         end
     end

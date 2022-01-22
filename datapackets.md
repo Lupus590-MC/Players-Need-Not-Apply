@@ -49,6 +49,17 @@ The first value of `responce` is from pcall, we can use this to know if the comm
 
 Everything within the `status` object is optional, nil values should be assumed to have not changed. `status.position.dim` should be the name of the dimention that the computer is in, we will modify GPS to provide this.
 
+### sound off resonse
+
+```json
+{
+    "type": "soundOffResponce",
+    "computerId": `number`,
+    "computerLabel": `string`
+}
+
+Also sent by the CC computer when it boots up. We could send this multiple times, either because we rebooted/reconnected.
+
 <!--TODO: Add events and a file tree?-->
 
 ## control center side
@@ -64,3 +75,13 @@ Packets sent from the web client.
     "computerID": `number`
 }
 ```
+
+### sound off
+
+```json
+{
+    "type": "soundOff"
+}
+```
+
+Asks all computers to reply so that they can be added to the command interface, sent when the commmand interface connects to the web socket server.
