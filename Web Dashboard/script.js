@@ -1,5 +1,6 @@
 "use strict";
 jQuery(document).ready(function(){
+    "use strict";
     let $ = jQuery;
 
     let tabs = $("#tabs");
