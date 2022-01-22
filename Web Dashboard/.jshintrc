@@ -1,3 +1,9 @@
 {
-    "esversion": 6
+    "esversion": 6,
+    "curly": true,
+    "eqeqeq": true,
+    "browser": true,
+    "devel": true,
+    "jquery": true,
+    "strict": true
 }
