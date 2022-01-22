@@ -1,3 +1,4 @@
+"use strict";
 jQuery(document).ready(function(){
     let $ = jQuery;
 
