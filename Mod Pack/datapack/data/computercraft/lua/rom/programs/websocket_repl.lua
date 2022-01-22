@@ -26,7 +26,7 @@ local function main()
                 if func then
                     local returns = table.pack(pcall(func))
                     returns.n = nil
-                    local returnsAsJsonString = textutils.serialiseJSON({ type = "commandResponce", responce = returns, computerId = os.getComputerID() })
+                    local returnsAsJsonString = textutils.serialiseJSON({ type = "commandResponse", response = returns, computerId = os.getComputerID() })
                     ws.send(returnsAsJsonString)
                 else
                     local errAsJsonString = textutils.serialiseJSON({ type = "error", errorInfo = err, computerId = os.getComputerID(), fatal = false })

@@ -19,17 +19,17 @@ Packets sent from computercraft.
 
 Recived packet was not understood or REPL has encountered an error.  If `fatal` is true then it means that the program is in the process of closing, otherwise it thinks it can recover from the error and might be ready for more commands.
 
-### command responce
+### command response
 
 ```json
 {
-    "type": "commandResponce",
-    "responce": [`bool`, `any`, ...],
+    "type": "commandResponse",
+    "response": [`bool`, `any`, ...],
     "computerId": `number`
 }
 ```
 
-The first value of `responce` is from pcall, we can use this to know if the command succeded. A `false` here doesn't need the same level of caution as an `error` packet as the REPL wasn't effected by the error.
+The first value of `response` is from pcall, we can use this to know if the command succeded. A `false` here doesn't need the same level of caution as an `error` packet as the REPL wasn't effected by the error.
 
 ### status update
 
@@ -53,7 +53,7 @@ Everything within the `status` object is optional, nil values should be assumed 
 
 ```json
 {
-    "type": "soundOffResponce",
+    "type": "soundOffResponse",
     "computerId": `number`,
     "computerLabel": `string`
 }

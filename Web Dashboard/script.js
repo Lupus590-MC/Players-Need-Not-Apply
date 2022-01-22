@@ -53,7 +53,7 @@ jQuery(document).ready(function(){
     let targetIdField = $("#targetId");
     let commandField = $("#command");
     let submitButton = $("#submit");
-    let responceField = $("#responce");
+    let responseField = $("#response");
     let errorField = $("#error");
     let statusFields = {};
 
@@ -63,12 +63,12 @@ jQuery(document).ready(function(){
         let received_msg = JSON.parse(evt.data);
         console.debug(received_msg);
 
-        responceField.val("");
+        responseField.val("");
         errorField.val("");
 
-        if(received_msg.type === "commandResponce"){
-            let responceString = JSON.stringify(received_msg.responce);
-            responceField.val(responceString);
+        if(received_msg.type === "commandResponse"){
+            let responseString = JSON.stringify(received_msg.response);
+            responseField.val(responseString);
         } else if(received_msg.type === "error"){
             let errorInfoString = JSON.stringify(received_msg.errorInfo);
             errorField.val(errorInfoString);
@@ -88,7 +88,7 @@ jQuery(document).ready(function(){
         let command = commandField.val();
         let commandPacket = { type: "command", command: command, computerId: targetId};
 
-        responceField.val("");
+        responseField.val("");
         errorField.val("");
 
         ws.send(JSON.stringify(commandPacket));
