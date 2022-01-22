@@ -12,7 +12,7 @@ Packets sent from computercraft.
 {
     "type": "error",
     "errorMessage": `string`,
-    "computerID": `number`,
+    "computerId": `number`,
     "terminal": `bool`
 }
 ```
@@ -25,7 +25,7 @@ Recived packet was not understood or REPL has encountered an error.  If `termina
 {
     "type": "commandResponce",
     "responce": [`bool`, `any`, ...],
-    "computerID": `number`
+    "computerId": `number`
 }
 ```
 
@@ -43,7 +43,7 @@ The first value of `responce` is from pcall, we can use this to know if the comm
         "immediateSurroundings": {"up": `object of block info`, "down": ..., "front":...},
         "position": {"x": `number`, "y": `number`, "z": `number`, "dim": `string`}
     },
-    "computerID": `number`
+    "computerId": `number`
 }
 ```
 

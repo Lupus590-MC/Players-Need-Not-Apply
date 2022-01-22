@@ -6,12 +6,12 @@ jQuery(document).ready(function(){
 
     /**
      * create a new tab for the new computer and set it up
-     * @param  {number} ccComputerID
+     * @param  {number} ccComputerId
      * @param  {string} [ccComputerLabel]
      */
-    function onNewConnection(ccComputerID, ccComputerLabel) {
+    function onNewConnection(ccComputerId, ccComputerLabel) {
         //TODO: check if it has a tab already, it might have recovered from a crash and rebooted
-        console.debug("Making tab for new connection with data: ", {ccComputerID, ccComputerLabel});
+        console.debug("Making tab for new connection with data: ", {ccComputerId, ccComputerLabel});
 
         let tabForComputerExists = $("#computer-"+ccComputerID)[0];
         if(tabForComputerExists){
@@ -24,9 +24,9 @@ jQuery(document).ready(function(){
             ccComputerLabel = ccComputerLabel + " - ";
         }
 
-        tabs.children("ul").append("<li><a href=\"#computer-"+ccComputerID+"\">"+ccComputerLabel+"#"+ccComputerID+"</a></li>");
+        tabs.children("ul").append("<li><a href=\"#computer-"+ccComputerId+"\">"+ccComputerLabel+"#"+ccComputerId+"</a></li>");
         let clonedTemplate = $("#template").clone();
-        clonedTemplate.attr("id", "computer-"+ccComputerID);
+        clonedTemplate.attr("id", "computer-"+ccComputerId);
         clonedTemplate.appendTo(tabs);
         tabs.tabs("refresh");
     }
@@ -89,7 +89,7 @@ jQuery(document).ready(function(){
     submitButton.click(function(){
         let targetId = parseInt(targetIdField.val());
         let command = commandField.val();
-        let commandPacket = { type: "command", command: command, computerID: targetId};
+        let commandPacket = { type: "command", command: command, computerId: targetId};
 
         responceField.val("");
         errorField.val("");

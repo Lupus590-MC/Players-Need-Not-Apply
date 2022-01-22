@@ -19,17 +19,17 @@ local function main()
         local commandAsJsonString = ws.receive()
         if commandAsJsonString then
             local commandData = textutils.unserialiseJSON(commandAsJsonString)
-            if commandData and commandData.computerID == os.getComputerID() and commandData.type == "command" then
+            if commandData and commandData.computerId == os.getComputerID() and commandData.type == "command" then
                 local env = setmetatable({}, { __index = _ENV }) -- inherit our env, possibly not a good idea
                 env._ENV = env
                 local func, err = load("return "..commandData.command, nil,  nil, env)
                 if func then
                     local returns = table.pack(pcall(func))
                     returns.n = nil
-                    local returnsAsJsonString = textutils.serialiseJSON({ type = "commandResponce", responce = returns, computerID = os.getComputerID() })
+                    local returnsAsJsonString = textutils.serialiseJSON({ type = "commandResponce", responce = returns, computerId = os.getComputerID() })
                     ws.send(returnsAsJsonString)
                 else
-                    local errAsJsonString = textutils.serialiseJSON({ type = "error", errorMessage = err, computerID = os.getComputerID(), terminal = false })
+                    local errAsJsonString = textutils.serialiseJSON({ type = "error", errorMessage = err, computerId = os.getComputerID(), terminal = false })
                     ws.send(errAsJsonString)
                 end
 			elseif commandData and commandData.type == "soundOff" then
@@ -44,7 +44,7 @@ end
 local ok, err = pcall(main)
 
 if not ok then
-    local errAsJsonString = textutils.serialiseJSON({ type = "error", errorMessage = err, computerID = os.getComputerID(), terminal = true})
+    local errAsJsonString = textutils.serialiseJSON({ type = "error", errorMessage = err, computerId = os.getComputerID(), terminal = true})
     ws.send(errAsJsonString)
     ws.close()
     os.reboot() -- This is the bottom level program and in startup, rebooting when we error might help reconnect the computer to the control center
