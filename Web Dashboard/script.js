@@ -13,6 +13,11 @@ jQuery(document).ready(function(){
         //TODO: check if it has a tab already, it might have recovered from a crash and rebooted
         console.debug("Making tab for new connection with data: ", {ccComputerID, ccComputerLabel});
 
+        let tabForComputerExists = $("#computer-"+ccComputerID)[0];
+        if(tabForComputerExists){
+            return;
+        }
+
         if(ccComputerLabel === undefined || ccComputerLabel === null || ccComputerLabel === ""){
             ccComputerLabel = "";
         }else{
