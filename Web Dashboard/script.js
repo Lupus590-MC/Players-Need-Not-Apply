@@ -66,13 +66,13 @@ jQuery(document).ready(function(){
         responceField.val("");
         errorField.val("");
 
-        if(received_msg.type == "commandResponce"){
+        if(received_msg.type === "commandResponce"){
             let responceString = JSON.stringify(received_msg.responce);
             responceField.val(responceString);
-        } else if(received_msg.type == "error"){
+        } else if(received_msg.type === "error"){
             let errorInfoString = JSON.stringify(received_msg.errorInfo);
             errorField.val(errorInfoString);
-        } else if(received_msg.type == "soundOffResponse"){
+        } else if(received_msg.type === "soundOffResponse"){
             let ccComputerId = received_msg.computerId;
             let ccComputerLabel = received_msg.computerLabel;
             onNewConnection(ccComputerId, ccComputerLabel);
