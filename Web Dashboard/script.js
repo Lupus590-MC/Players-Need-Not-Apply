@@ -32,6 +32,23 @@ jQuery(document).ready(function(){
         tabs.tabs("refresh");
     }
 
+
+    /**
+     * @param  {number} ccComputerId
+     * @param  {any} errorData
+     * @param  {boolean} isFatal
+     */
+     function onError(ccComputerId, errorData, isFatal){
+        //TODO: maybe use alert boxes for when the REPL errors?
+        console.error({ccComputerId, errorData, isFatal});
+
+        if(isFatal){
+            // The CC computer has crashed if it doesn't connect again soon then it will need external assistance (a disk drive with a startup file)
+        } else {
+            // The CC computer messaging protocol has errored but recovered, any running tasks may have been interupted.
+        }
+    }
+
     let urlParams = new URLSearchParams(window.location.search);
     let WebSocketAddress = "ws://localhost:4000/"+(urlParams.get('ws') || "test");
     console.log("Connecting to "+WebSocketAddress);
@@ -49,7 +66,6 @@ jQuery(document).ready(function(){
 
 
 
-    //TODO: maybe use alert boxes for when the REPL errors?
     //TODO: rewrite to handle the tab system
     let targetIdField = $("#targetId");
     let commandField = $("#command");
@@ -72,6 +88,10 @@ jQuery(document).ready(function(){
             responseField.val(responseString);
         } else if(received_msg.type === "error"){
             let errorInfoString = JSON.stringify(received_msg.errorInfo);
+            let errorInfo = received_msg.errorInfo;
+            let ccComputerId = received_msg.computerId;
+            let isErrorFatal = received_msg.fatal;
+            onError(ccComputerId, errorInfo, isErrorFatal);
             errorField.val(errorInfoString);
         } else if(received_msg.type === "soundOffResponse"){
             let ccComputerId = received_msg.computerId;
