@@ -1,6 +1,10 @@
 # data packets
 
+Docs on the message packets for the REPL, likely will also be used for other things too.
+
 ## computer craft side
+
+Packets sent from computercraft.
 
 ### error
 
@@ -13,7 +17,7 @@
 }
 ```
 
-Recived packet was not understood or running program has encountered an error.  If `terminal` is true then it means that the program is in the process of closing, otherwise it is probably ready for more commands.
+Recived packet was not understood or REPL has encountered an error.  If `terminal` is true then it means that the program is in the process of closing, otherwise it thinks it can recover from the error and might be ready for more commands.
 
 ### command responce
 
@@ -25,7 +29,7 @@ Recived packet was not understood or running program has encountered an error.  
 }
 ```
 
-The first value of `responce` is from pcall, we can use this to know if the command succeded. A `false` here probably doesn't need to be the same level of caution as an `error` packet.
+The first value of `responce` is from pcall, we can use this to know if the command succeded. A `false` here doesn't need the same level of caution as an `error` packet as the REPL wasn't effected by the error.
 
 ### status update
 
@@ -48,6 +52,8 @@ Everything within the `status` object is optional, nil values should be assumed 
 <!--TODO: Add events and a file tree?-->
 
 ## control center side
+
+Packets sent from the web client.
 
 ### command
 
