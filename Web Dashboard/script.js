@@ -10,6 +10,8 @@ jQuery(document).ready(function(){
      * @param  {string} [ccComputerLabel]
      */
     function onNewConnection(ccComputerID, ccComputerLabel) {
+        console.debug("Making tab for new connection with data: ", {ccComputerID, ccComputerLabel});
+
         if(ccComputerLabel === undefined || ccComputerLabel === null || ccComputerLabel === ""){
             ccComputerLabel = "";
         }else{
@@ -24,7 +26,15 @@ jQuery(document).ready(function(){
     }
 
     let urlParams = new URLSearchParams(window.location.search);
-    let webSocketName = urlParams.get('ws') || "test";
+    let WebSocketAddress = "ws://localhost:4000/"+(urlParams.get('ws') || "test");
+    console.log("Connecting to "+WebSocketAddress);
+    let ws = new WebSocket(WebSocketAddress);
+
+    ws.onopen = function(evt){
+        console.log("Connected");
+        console.debug(evt);
+
+    };
 
     //TODO: maybe use alert boxes for when the REPL errors?
     //TODO: rewrite to handle the tab system
@@ -36,10 +46,10 @@ jQuery(document).ready(function(){
     let statusFields = {};
 
 
-    let ws = new WebSocket("ws://localhost:4000/"+webSocketName);
+
     ws.onmessage = function (evt) {
         let received_msg = JSON.parse(evt.data);
-        //console.log(received_msg);
+        console.debug(received_msg);
 
         responceField.val("");
         errorField.val("");
@@ -53,8 +63,8 @@ jQuery(document).ready(function(){
             errorField.val(errorMessageString);
         }
         else{
-            console.log("Unknown packet from pipe");
-            console.log(received_msg);
+            console.warn("Unknown packet from pipe");
+            console.warn(received_msg);
         }
     };
 
