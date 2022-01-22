@@ -60,7 +60,7 @@ Packets sent from the web client.
 ```json
 {
     "type": "command",
-    "command": `string``,
+    "command": `string`,
     "computerID": `number`
 }
 ```
