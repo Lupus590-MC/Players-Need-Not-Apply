@@ -71,8 +71,8 @@ jQuery(document).ready(function(){
             responceField.val(responceString);
         }
         else if(received_msg.type == "error"){
-            let errorMessageString = JSON.stringify(received_msg.errorMessage);
-            errorField.val(errorMessageString);
+            let errorInfoString = JSON.stringify(received_msg.errorInfo);
+            errorField.val(errorInfoString);
         }
         else if(received_msg.type == "soundOffResponse"){
             let ccComputerId = received_msg.computerId;

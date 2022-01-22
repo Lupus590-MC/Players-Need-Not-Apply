@@ -29,7 +29,7 @@ local function main()
                     local returnsAsJsonString = textutils.serialiseJSON({ type = "commandResponce", responce = returns, computerId = os.getComputerID() })
                     ws.send(returnsAsJsonString)
                 else
-                    local errAsJsonString = textutils.serialiseJSON({ type = "error", errorMessage = err, computerId = os.getComputerID(), fatal = false })
+                    local errAsJsonString = textutils.serialiseJSON({ type = "error", errorInfo = err, computerId = os.getComputerID(), fatal = false })
                     ws.send(errAsJsonString)
                 end
 			elseif commandData and commandData.type == "soundOff" then
@@ -44,7 +44,7 @@ end
 local ok, err = pcall(main)
 
 if not ok then
-    local errAsJsonString = textutils.serialiseJSON({ type = "error", errorMessage = err, computerId = os.getComputerID(), fatal = true})
+    local errAsJsonString = textutils.serialiseJSON({ type = "error", errorInfo = err, computerId = os.getComputerID(), fatal = true})
     ws.send(errAsJsonString)
     ws.close()
     os.reboot() -- This is the bottom level program and in startup, rebooting when we error might help reconnect the computer to the control center

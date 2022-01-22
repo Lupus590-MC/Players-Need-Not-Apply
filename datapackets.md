@@ -11,7 +11,7 @@ Packets sent from computercraft.
 ```json
 {
     "type": "error",
-    "errorMessage": `string`,
+    "errorInfo": `string`,
     "computerId": `number`,
     "fatal": `bool`
 }
