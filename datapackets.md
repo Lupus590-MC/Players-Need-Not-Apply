@@ -13,11 +13,11 @@ Packets sent from computercraft.
     "type": "error",
     "errorMessage": `string`,
     "computerId": `number`,
-    "terminal": `bool`
+    "fatal": `bool`
 }
 ```
 
-Recived packet was not understood or REPL has encountered an error.  If `terminal` is true then it means that the program is in the process of closing, otherwise it thinks it can recover from the error and might be ready for more commands.
+Recived packet was not understood or REPL has encountered an error.  If `fatal` is true then it means that the program is in the process of closing, otherwise it thinks it can recover from the error and might be ready for more commands.
 
 ### command responce
 
