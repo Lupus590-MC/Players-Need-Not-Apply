@@ -10,17 +10,16 @@ jQuery(document).ready(function(){
      * @param  {string} [ccComputerLabel]
      */
     function onNewConnection(ccComputerId, ccComputerLabel) {
-        //TODO: check if it has a tab already, it might have recovered from a crash and rebooted
         console.debug("Making tab for new connection with data: ", {ccComputerId, ccComputerLabel});
 
-        let tabForComputerExists = $("#computer-"+ccComputerID)[0];
+        let tabForComputerExists = $("#computer-"+ccComputerId)[0];
         if(tabForComputerExists){
             return;
         }
 
         if(ccComputerLabel === undefined || ccComputerLabel === null || ccComputerLabel === ""){
             ccComputerLabel = "";
-        }else{
+        } else {
             ccComputerLabel = ccComputerLabel + " - ";
         }
 
@@ -69,17 +68,14 @@ jQuery(document).ready(function(){
         if(received_msg.type == "commandResponce"){
             let responceString = JSON.stringify(received_msg.responce);
             responceField.val(responceString);
-        }
-        else if(received_msg.type == "error"){
+        } else if(received_msg.type == "error"){
             let errorInfoString = JSON.stringify(received_msg.errorInfo);
             errorField.val(errorInfoString);
-        }
-        else if(received_msg.type == "soundOffResponse"){
+        } else if(received_msg.type == "soundOffResponse"){
             let ccComputerId = received_msg.computerId;
             let ccComputerLabel = received_msg.computerLabel;
             onNewConnection(ccComputerId, ccComputerLabel);
-        }
-        else{
+        } else {
             console.warn("Unknown packet from pipe");
             console.warn(received_msg);
         }
