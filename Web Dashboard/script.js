@@ -21,48 +21,7 @@ jQuery(document).ready(function(){
         clonedTemplate.attr("id", "computer-"+ccComputerID);
         clonedTemplate.appendTo(tabs);
         tabs.tabs("refresh");
-    }
-
-
-    var newTabButton = $("#new-tab");
-    var tabNumber = 0;
-    newTabButton.click(function(){
-        tabNumber+=1;
-        onNewConnection(tabNumber);
-
-        tabNumber+=1;
-        onNewConnection(tabNumber, "test");
-    });
-
-
-    //why did I add ways to remove tabs, disconnects are probably only a sign that something is wrong?
-    var removeTabButton = $("#remove-tab");
-    removeTabButton.click(function(){
-        if(tabNumber>0){
-            tabNumber-=1;
-            tabs.children("ul").children()[tabNumber].remove();
-            tabs.children()[tabNumber+1].remove();
-            tabs.tabs("refresh");
-        }
-    });
-
-    var removeSpecificTabButton = $("#remove-specific-tab");
-    var specificTabToRemove = $("#specific-tab-to-remove");
-    removeSpecificTabButton.click(function(){
-        if(tabNumber>0 && specificTabToRemove.val() !== ""){
-            tabs.children("ul").children().children().each(
-                function(index , tab){
-                    if(tab.text === specificTabToRemove.val()){
-                        tabNumber-=1;
-                        tabs.children("ul").children()[index].remove();
-                        tabs.children()[index+1].remove();
-                        tabs.tabs("refresh");
-                    }
-                }
-            );
-        }
-    });
-
+    } 
 
     //TODO: rewrite to handle the tab system
     var targetIdField = $("#targetId");
@@ -97,21 +56,59 @@ jQuery(document).ready(function(){
             console.log("Unknown packet from pipe");
             console.log(received_msg);
         }
+    };
 
-     };
+    // TODO: rewrite https://stackoverflow.com/questions/17451660/one-click-event-handler-for-multiple-buttons
+    submitButton.click(function(){
+        var targetId = parseInt(targetIdField.val());
+        var command = commandField.val();
+        var commandPacket = { type: "command", command: command, computerID: targetId};
+
+        responceField.val("");
+        errorField.val("");
+
+        ws.send(JSON.stringify(commandPacket));
+    });
 
 
-     // TODO: rewrite https://stackoverflow.com/questions/17451660/one-click-event-handler-for-multiple-buttons
-     submitButton.click(function(){
-         var targetId = parseInt(targetIdField.val());
-         var command = commandField.val();
-         var commandPacket = { type: "command", command: command, computerID: targetId};
 
-         responceField.val("");
-         errorField.val("");
+    // DEBUG STUFF
 
-         ws.send(JSON.stringify(commandPacket));
-     });
+    var newTabButton = $("#new-tab");
+    var tabNumber = 0;
+    newTabButton.click(function(){
+        tabNumber+=1;
+        onNewConnection(tabNumber);
+    });
+
+
+    //why did I add ways to remove tabs, disconnects are probably only a sign that something is wrong?
+    var removeTabButton = $("#remove-tab");
+    removeTabButton.click(function(){
+        if(tabNumber>0){
+            tabNumber-=1;
+            tabs.children("ul").children()[tabNumber].remove();
+            tabs.children()[tabNumber+1].remove();
+            tabs.tabs("refresh");
+        }
+    });
+
+    var removeSpecificTabButton = $("#remove-specific-tab");
+    var specificTabToRemove = $("#specific-tab-to-remove");
+    removeSpecificTabButton.click(function(){
+        if(tabNumber>0 && specificTabToRemove.val() !== ""){
+            tabs.children("ul").children().children().each(
+                function(index , tab){
+                    if(tab.text === specificTabToRemove.val()){
+                        tabNumber-=1;
+                        tabs.children("ul").children()[index].remove();
+                        tabs.children()[index+1].remove();
+                        tabs.tabs("refresh");
+                    }
+                }
+            );
+        }
+    });
 
 
 });
