@@ -32,7 +32,7 @@ jQuery(document).ready(function(){
     }
 
     /**
-     *
+     * puts the received string into the response field of the given computer's tab
      * @param {number} ccComputerId
      * @param {string} responseString
      */
@@ -50,6 +50,7 @@ jQuery(document).ready(function(){
 
 
     /**
+     * proccesses reponse data from CC computers
      * @param  {number} ccComputerId
      * @param  {[boolean, ...]} responseData
      */
@@ -60,6 +61,8 @@ jQuery(document).ready(function(){
     }
 
     /**
+     * processes errors from CC computer connection
+     * errors in client code should be caught and returned as command responses so if this gets used then something is very wrong
      * @param  {number} ccComputerId
      * @param  {any} errorData
      * @param  {boolean} isFatal
@@ -76,7 +79,7 @@ jQuery(document).ready(function(){
     }
 
     /**
-     *
+     * sends commands to the CC computer
      * @param {number} ccComputerId
      * @param {string} command
      */
