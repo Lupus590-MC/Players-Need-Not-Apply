@@ -1,4 +1,3 @@
-"use strict";
 jQuery(document).ready(function(){
     "use strict";
     let $ = jQuery;
@@ -32,6 +31,23 @@ jQuery(document).ready(function(){
         tabs.tabs("refresh");
     }
 
+
+    /**
+     * @param  {number} ccComputerId
+     * @param  {[boolean, ...]} responseData
+     */
+    function onCommandResponse(ccComputerId, responseData){
+        let computerTab = $("#computer-"+ccComputerId);
+        computerTab.children().each(function(_index, value){
+            value = $(value);
+            if (value.data("section") === "command and respond"){
+                let commandAndRespondSection = value;
+                let responseDataString = JSON.stringify(responseData);
+                commandAndRespondSection.children("#response").val(responseDataString);
+            }
+        });
+
+    }
 
     /**
      * @param  {number} ccComputerId
@@ -85,6 +101,9 @@ jQuery(document).ready(function(){
 
         if(received_msg.type === "commandResponse"){
             let responseString = JSON.stringify(received_msg.response);
+            let response = received_msg.response;
+            let ccComputerId = received_msg.computerId;
+            onCommandResponse(ccComputerId, response);
             responseField.val(responseString);
         } else if(received_msg.type === "error"){
             let errorInfoString = JSON.stringify(received_msg.errorInfo);
