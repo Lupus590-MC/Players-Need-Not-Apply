@@ -8,10 +8,7 @@ local expect = require("cc.expect")
 -- TODO: find a nice spot to spawn
     -- Maybe remove saplings and other nice things after?
 
--- TODO: tell the new turtle it's web socket
-    -- string.format("%08x", math.random(1, 2147483647)) is good enough from testing, I'm not going to have > 100000 players and even that didn't collide.
-
--- simple best efort converts "~" to absolute coords because getBlockInfo wants that
+-- simple best effort converts "~" to absolute coords because getBlockInfo wants that
 local function relativeCoordsToAbsolute(x, y, z)
     expect.expect(1, x, "string", "number")
     expect.expect(2, y, "string", "number")
