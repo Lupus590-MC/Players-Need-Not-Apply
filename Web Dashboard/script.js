@@ -37,7 +37,7 @@ jQuery(document).ready(function(){
      * @param {string} responseString
      */
     function setResponseField(ccComputerId, responseString){
-        //TODO: can we be more intelligent here?
+        //TODO: can we be more intelligent here? maybe changing our data-section to ids?
         let computerTab = $("#computer-"+ccComputerId);
         computerTab.children().each(function(_index, value){
             value = $(value);
