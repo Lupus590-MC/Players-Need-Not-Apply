@@ -31,22 +31,32 @@ jQuery(document).ready(function(){
         tabs.tabs("refresh");
     }
 
+    /**
+     *
+     * @param {number} ccComputerId
+     * @param {string} responseString
+     */
+    function setResponseField(ccComputerId, responseString){
+        //TODO: can we be more intelligent here?
+        let computerTab = $("#computer-"+ccComputerId);
+        computerTab.children().each(function(_index, value){
+            value = $(value);
+            if (value.data("section") === "command and respond"){
+                let commandAndRespondSection = value;
+                commandAndRespondSection.children("#response").val(responseString);
+            }
+        });
+    }
+
 
     /**
      * @param  {number} ccComputerId
      * @param  {[boolean, ...]} responseData
      */
     function onCommandResponse(ccComputerId, responseData){
-        let computerTab = $("#computer-"+ccComputerId);
-        computerTab.children().each(function(_index, value){
-            value = $(value);
-            if (value.data("section") === "command and respond"){
-                let commandAndRespondSection = value;
-                let responseDataString = JSON.stringify(responseData);
-                commandAndRespondSection.children("#response").val(responseDataString);
-            }
-        });
-
+        console.debug({ccComputerId, responseData});
+        let responseDataString = JSON.stringify(responseData);
+        setResponseField(ccComputerId, responseDataString);
     }
 
     /**
@@ -64,6 +74,30 @@ jQuery(document).ready(function(){
             // The CC computer messaging protocol has errored but recovered, any running tasks may have been interupted.
         }
     }
+
+    /**
+     *
+     * @param {number} ccComputerId
+     * @param {string} command
+     */
+    function onCommandButtonClick(ccComputerId, command){
+        console.log("Sending command: "+command);
+        let commandPacket = { type: "command", command: command, computerId: ccComputerId};
+        setResponseField(ccComputerId, "");
+
+        ws.send(JSON.stringify(commandPacket));
+    }
+
+    $(document).on("click", "#submit", function(e){
+        let submitButton = $(e.target);
+        let tabSection = submitButton.parent().parent();
+        let commandField = submitButton.parent().children("#command");
+
+        let commandString = commandField.val();
+        let ccComputerId = tabSection.attr('id').replace("computer-", "");
+        ccComputerId = parseInt(ccComputerId);
+        onCommandButtonClick(ccComputerId, commandString);
+    });
 
     let urlParams = new URLSearchParams(window.location.search);
     let WebSocketAddress = "ws://localhost:4000/"+(urlParams.get('ws') || "test");
