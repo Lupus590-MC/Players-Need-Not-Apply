@@ -1,4 +1,4 @@
-THIS LICENSE DOESN'T COVER THE WEB SOCKET BRIDGE SUB MODULE!
+THIS LICENSE DOESN'T COVER THE WEB SOCKET BRIDGE SUBMODULE!
 That submodule belongs to MCJack123 and was gratiously provided.
 If you need a license for it, then contact Jack. Alternatively,
 you can swap it out for another piece of software that relays
