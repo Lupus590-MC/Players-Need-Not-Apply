@@ -5,6 +5,8 @@ jQuery(document).ready(function(){
     let tabs = $("#tabs");
     tabs.tabs();
 
+    let waitingForConectionMessage = $("#waitingForConectionMessage");
+
     /**
      * create a new tab for the new computer and set it up
      * @param  {number} ccComputerId
@@ -12,6 +14,9 @@ jQuery(document).ready(function(){
      */
     function onNewConnection(ccComputerId, ccComputerLabel) {
         console.debug("Making tab for new connection with data: ", {ccComputerId, ccComputerLabel});
+
+        waitingForConectionMessage.hide();
+        tabs.show();
 
         let tabForComputerExists = $("#computer-"+ccComputerId)[0];
         if(tabForComputerExists){

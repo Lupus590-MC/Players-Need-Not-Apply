@@ -19,12 +19,12 @@
   <!--TODO: abuse readonly inputs as outputs less-->
   <!--TODO: a way to send terminate event and restart the computer (like ctrl+r)-->
 
-  <section style="display: none;"> <!--TODO what was I doing with this?-->
+  <section style="display: none;"> <!--TODO might use for server anouncements -->
     <label for="notice">Notice:</label>
     <input type="text" id="notice" name="notice" readonly=true><br>
   </section>
 
-  <nav id="tabs">
+  <nav id="tabs" style="display: none;">
     <ul>
     </ul>
   </nav>
@@ -33,6 +33,10 @@
 
   <!--TODO: a message to say that we are waiting for a turtle to connect
     might be nicer to hide the tabs when they're empty as well-->
+
+  <article id="waitingForConectionMessage">
+    Currently waiting for a CC computer to connect. If this takes more than a few seconds then something might have gone wrong, check JavaScript log for details.
+  </article>
 
 
   <article id="template" style="display: none;">
