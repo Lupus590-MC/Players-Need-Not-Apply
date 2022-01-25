@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.util.Scanner;
 import java.util.UUID;
 
-public class TurtleSpawner {
+public class TurtleSpawner implements ITurtleSpawner{
 
     private final String computercraftComputerFolderName;
     private final String commandComputerRequestFileName;

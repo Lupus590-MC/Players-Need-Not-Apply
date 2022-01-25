@@ -2,38 +2,32 @@ package Lupus590.PlayersNeedNotApply;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Scanner;
-import java.util.UUID;
 
 public class NewPlayerSetupBackend {
+    private static final boolean useMockTurtleSpawner = true;
+    private static  final boolean useCli = true;
 
-    private static Path computercraftComputerFolderPath = Path.of("C:\\Games\\Minecraft\\MultiMC\\instances\\Players Need Not Apply - 1.16\\.minecraft\\saves\\New World\\computercraft\\computer");
-    private static Integer commandComputerId = 6;
+    private static final Path computercraftComputerFolderPath = Path.of("C:\\Games\\Minecraft\\MultiMC\\instances\\Players Need Not Apply - 1.16\\.minecraft\\saves\\New World\\computercraft\\computer");
+    private static final Integer commandComputerId = 6;
 
-    private static String rootConnectionUrl = "file:///C:/MyStuff/Projects/CC/Players-Need-Not-Apply/Web%20Dashboard/index.html?ws=";
+    private static final String rootConnectionUrl = "file:///C:/MyStuff/Projects/CC/Players-Need-Not-Apply/Web%20Dashboard/index.html?ws=";
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        ITurtleSpawner turtleSpawner;
+        if(useMockTurtleSpawner){
+            turtleSpawner = new MockTurtleSpawner();
+        }
+        else{
+            turtleSpawner = new TurtleSpawner(computercraftComputerFolderPath, commandComputerId);
+        }
 
-        Scanner keyboardScanner = new Scanner(System.in);
-        TurtleSpawner turtleSpawner = new TurtleSpawner(computercraftComputerFolderPath, commandComputerId);
-
-        while (true) {
-            // TODO: discord bot?
-            System.out.println("press enter to spawn new turtle (q to quit)"); // wait for signal to spawn new turtle
-            String input = keyboardScanner.nextLine();
-            if (input.equalsIgnoreCase("q")){
-                return;
-            }
-
-            UUID newPlayersUUID = turtleSpawner.spawnTurtle(true);
-            if (newPlayersUUID != null) {
-                System.out.println("new turtle's connection url: "+rootConnectionUrl+newPlayersUUID.toString()); // tell player their UUID
-            } else {
-                System.out.println("error creating new turtle");
-            }
-
-
+        if(useCli){
+            CommandLineInterface cli = new CommandLineInterface(turtleSpawner, rootConnectionUrl, computercraftComputerFolderPath, commandComputerId);
+            cli.run();
+        }
+        else{
+            // TODO: discord bot
         }
     }
 }
