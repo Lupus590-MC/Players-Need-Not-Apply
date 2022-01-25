@@ -1,4 +1,4 @@
-package Lupus590.PlayersNeedNotApply;
+package lupus590.players_need_not_apply;
 
 import java.io.IOException;
 import java.util.UUID;
