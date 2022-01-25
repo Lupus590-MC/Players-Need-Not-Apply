@@ -31,6 +31,8 @@ Recived packet was not understood or REPL has encountered an error.  If `fatal` 
 
 The first value of `response` is from pcall, we can use this to know if the command succeded. A `false` here doesn't need the same level of caution as an `error` packet as the REPL wasn't effected by the error.
 
+In a special case, if the command was `exit()` (case sensitive) then the response is `"exiting ws REPL"` without the array and `true` parts. This is added for debugging PNNA and is not exspected to be used by players.
+
 ### status update
 
 ```json

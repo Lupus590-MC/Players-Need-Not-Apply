@@ -40,6 +40,11 @@ local function main()
         if commandAsJsonString then
             local commandData = textutils.unserialiseJSON(commandAsJsonString)
             if commandData and commandData.computerId == os.getComputerID() and commandData.type == "command" then
+				if commandData.command == "exit()" then
+					local returnsAsJsonString = textutils.serialiseJSON({ type = "commandResponse", response = "exiting ws REPL", computerId = os.getComputerID() })
+					ws.send(returnsAsJsonString)
+					return
+				else
                 	runCommand(commandData)
 				end
 			elseif commandData and commandData.type == "soundOff" then
