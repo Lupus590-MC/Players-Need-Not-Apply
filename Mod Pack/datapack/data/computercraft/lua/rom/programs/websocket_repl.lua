@@ -10,9 +10,29 @@ end
 -- TODO: don't assume that ws is seccure, verify that message is from control center or toher trusted source - https://gist.github.com/MCJack123/7752c85918bcf23ada028abd615e8750
 -- TODO: commands can be dropped if the computer is running a command already and happens to pull an event
 
-local function main()
+local function soundOff()
 	local errAsJsonString = textutils.serialiseJSON({ type = "soundOffResponse", computerId = os.getComputerID(), computerLabel = os.getComputerLabel() })
 	ws.send(errAsJsonString)
+end
+
+local function runCommand(commandData)
+	local env = setmetatable({}, { __index = _ENV }) -- inherit our env, possibly not a good idea
+	env._ENV = env
+	local func, err = load("return "..commandData.command, nil,  nil, env)
+	if func then
+		local returns = table.pack(pcall(func))
+		returns.n = nil
+		local returnsAsJsonString = textutils.serialiseJSON({ type = "commandResponse", response = returns, computerId = os.getComputerID() })
+		ws.send(returnsAsJsonString)
+	else
+		local errAsJsonString = textutils.serialiseJSON({ type = "error", errorInfo = err, computerId = os.getComputerID(), fatal = false })
+		ws.send(errAsJsonString)
+	end
+end
+
+
+local function main()
+	soundOff()
 	print("connected")
 
     while true do
@@ -20,21 +40,10 @@ local function main()
         if commandAsJsonString then
             local commandData = textutils.unserialiseJSON(commandAsJsonString)
             if commandData and commandData.computerId == os.getComputerID() and commandData.type == "command" then
-                local env = setmetatable({}, { __index = _ENV }) -- inherit our env, possibly not a good idea
-                env._ENV = env
-                local func, err = load("return "..commandData.command, nil,  nil, env)
-                if func then
-                    local returns = table.pack(pcall(func))
-                    returns.n = nil
-                    local returnsAsJsonString = textutils.serialiseJSON({ type = "commandResponse", response = returns, computerId = os.getComputerID() })
-                    ws.send(returnsAsJsonString)
-                else
-                    local errAsJsonString = textutils.serialiseJSON({ type = "error", errorInfo = err, computerId = os.getComputerID(), fatal = false })
-                    ws.send(errAsJsonString)
-                end
+                	runCommand(commandData)
+				end
 			elseif commandData and commandData.type == "soundOff" then
-				local errAsJsonString = textutils.serialiseJSON({ type = "soundOffResponse", computerId = os.getComputerID(), computerLabel = os.getComputerLabel() })
-                ws.send(errAsJsonString)
+				soundOff()
 				print("sounding off")
             end
         end
