@@ -7,7 +7,6 @@ local expect = require("cc.expect")
 
 -- TODO: find a nice spot to spawn
     -- Maybe remove saplings and other nice things after?
--- TODO: websocket to send coords of a chest for spawning nether/end turtles
 
 -- simple best effort converts "~" to absolute coords because getBlockInfo wants that
 local function relativeCoordsToAbsolute(x, y, z)
@@ -83,10 +82,11 @@ local function spawnOtherTurtle(x, y, z)
     local returns = table.pack(commands.setBlock(x, y, z, "computercraft:turtle_normal{Fuel: 0, On: 1, Items: [{ id: \"digitalitems:item_digitizer\", Count: 1, Slot: 0 }]}"))
 
     --pretty.pretty_print(returns)
+    sleep(1)
+    return getComputerID(x, y, z)
 end
 
-
-local function listenMode()
+local function listenOverworld()
     while true do
         fs.delete("request")
         fs.delete("response")
@@ -102,14 +102,46 @@ local function listenMode()
     end
 end
 
-if arg[1] == "overworld" then
-    print("turtleID: "..spawnOverworldTurtle())
-elseif arg[1] == "other" then
-    print("turtleID: "..spawnOtherTurtle())
-elseif arg[1] == "listen" then
-    listenMode()
+local function listenOther()
+
+end
+
+local function printUsage()
+    print(arg[0].." test overworld")
+    print(arg[0].." test other")
+    print(arg[0].." listen overworld")
+    print(arg[0].." listen other")
+end
+
+local mode = arg[1]
+local world = arg[2]
+
+if type(mode) ~= "string" or type(world) ~= "string" then
+	printUsage()
+	return
+end
+
+mode = mode:lower()
+world = world:lower()
+
+if world ~= "overworld" or world ~= "other" then
+	printUsage()
+	return
+end
+
+
+if mode == "test" then
+	if world == "overworld" then
+		print("turtleID: "..spawnOverworldTurtle())
+	elseif world == "other" then
+		print("turtleID: "..spawnOtherTurtle())
+	end
+elseif mode == "listen" then
+	if world == "overworld" then
+		listenOverworld()
+	elseif world == "other" then
+		listenOther()
+	end
 else
-    print(arg[0].." overworld")
-    print(arg[0].." other")
-    print(arg[0].." listen")
+	printUsage()
 end
