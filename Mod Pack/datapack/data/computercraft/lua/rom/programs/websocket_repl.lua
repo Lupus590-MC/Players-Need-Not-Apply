@@ -3,7 +3,7 @@ local websocketAddress = "ws://localhost:4000/"..endpoint
 local ws, err = http.websocket(websocketAddress)
 if not ws then
 	printError("Failed to connect to "..websocketAddress)
-	error(err)
+	error(err, 0)
 end
 -- TODO: make this easier to read
 -- TODO: don't assume that ws is seccure, verify that message is from control center or toher trusted source - https://gist.github.com/MCJack123/7752c85918bcf23ada028abd615e8750
