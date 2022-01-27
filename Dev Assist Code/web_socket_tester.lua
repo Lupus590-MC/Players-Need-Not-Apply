@@ -1,8 +1,14 @@
-local ws = http.websocket("ws://localhost:4000/test")
+local endpoint = arg[2] or "test"
+local websocketAddress = "ws://localhost:4000/"..endpoint
+local ws, err = http.websocket(websocketAddress)
+if not ws then
+	printError("Failed to connect to "..websocketAddress)
+	error(err, 0)
+end
 
 local mode = arg[1]
 if not mode then
-    error("mode must be `snoop` or `command`", 0)
+    error("mode (arg[1]) must be `snoop` or `command`", 0)
 end
 mode = mode:lower()
 
@@ -23,4 +29,6 @@ elseif mode == "command" then
         local data = textutils.serialiseJSON({type = "command", command = command, computerID = 3})
         ws.send(data)
     end
+else
+    error("mode (arg[1]) must be `snoop` or `command`", 0)
 end

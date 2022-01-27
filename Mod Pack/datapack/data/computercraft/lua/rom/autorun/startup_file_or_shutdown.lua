@@ -1,5 +1,6 @@
 -- delays first time boot so that the java app has time to set the websocket repl up
 
+-- TODO: check disks
 local function startupExists()
 	if fs.exists("startup.lua") then
 		return true

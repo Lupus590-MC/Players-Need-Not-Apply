@@ -1,3 +1,6 @@
+if not commands then
+	error("requires command computer", 0)
+end
 local f = fs.open("template.txt", "w")
 local x, y, z = commands.getBlockPosition()
 

@@ -7,6 +7,7 @@ local expect = require("cc.expect")
 
 -- TODO: find a nice spot to spawn
     -- Maybe remove saplings and other nice things after?
+-- TODO: websocket to send coords of a chest for spawning nether/end turtles
 
 -- simple best effort converts "~" to absolute coords because getBlockInfo wants that
 local function relativeCoordsToAbsolute(x, y, z)
