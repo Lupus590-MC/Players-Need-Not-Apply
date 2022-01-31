@@ -79,7 +79,7 @@ local function spawnOtherTurtle(x, y, z)
     x = x or "~"
     y = y or "~1"
     z = z or "~"
-    local returns = table.pack(commands.setBlock(x, y, z, "computercraft:turtle_normal{Fuel: 0, On: 1, Items: [{ id: \"digitalitems:item_digitizer\", Count: 1, Slot: 0 }]}"))
+    local returns = table.pack(commands.setBlock(x, y, z, "computercraft:turtle_normal{Fuel: 0, On: 1, RightUpgrade: \"advancedperipherals:chunky_turtle\", Items: [{ id: \"digitalitems:item_digitizer\", Count: 1, Slot: 0 }]}"))
 
     --pretty.pretty_print(returns)
     sleep(1)
