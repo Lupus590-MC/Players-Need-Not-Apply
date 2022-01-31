@@ -78,6 +78,10 @@
 		#Enable the block reader or not.
 		enableBlockReader = true
 
+	[Peripherals.Compass_Turtle]
+		#Enable the compass turtle or not.
+		enableCompassTurtle = true
+
 	[Peripherals.Operations]
 		#Range: > 0
 		suckCost = 1
