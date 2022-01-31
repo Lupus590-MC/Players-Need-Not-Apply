@@ -1,11 +1,17 @@
 if not commands then
 	error("requires command computer", 0)
 end
-local f = fs.open("template.txt", "w")
 local x, y, z = commands.getBlockPosition()
 
-local d = commands.getBlockInfo(x, y+1, z)
-d = textutils.serialiseJSON(d)
+local info = commands.getBlockInfo(x, y+1, z)
+require("cc.pretty").pretty_print(info)
+local json = textutils.serialiseJSON(info)
+local lua = textutils.serialise(info)
 
-f.write(d)
+local f = fs.open("template.json", "w")
+f.write(json)
+f.close()
+
+f = fs.open("template.lua", "w")
+f.write("return "..lua)
 f.close()
