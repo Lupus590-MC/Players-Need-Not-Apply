@@ -25,11 +25,15 @@ public class TurtleSpawner implements ITurtleSpawner{
     }
 
 
-    public UUID spawnTurtle(Boolean printTurtleId) throws IOException, InterruptedException {
-        UUID newPlayersUUID = null;
+    @Override
+    public UUID spawnTurtle(UUID existingConnection, Boolean printTurtleId) throws IOException, InterruptedException {
+        UUID connectionId = existingConnection;
+        if (connectionId == null){
+            connectionId = UUID.randomUUID();
+        }
         try{
             Integer turtleID = createTurtle();
-            newPlayersUUID = setUpTurtle(turtleID);
+            setUpTurtle(turtleID, connectionId);
             if (printTurtleId) {
                 System.out.println("new turtle id: " + turtleID.toString());
             }
@@ -37,11 +41,20 @@ public class TurtleSpawner implements ITurtleSpawner{
             e.printStackTrace(); // cleanUpCreateTurtle should recover most of these
             throw e;
         }
-        return newPlayersUUID;
+        return connectionId;
+    }
+
+    @Override
+    public UUID spawnTurtle(UUID existingConnection) throws IOException, InterruptedException {
+        return spawnTurtle(existingConnection,false);
+    }
+
+    public UUID spawnTurtle(Boolean printTurtleId) throws IOException, InterruptedException {
+        return spawnTurtle(null,printTurtleId);
     }
 
     public UUID spawnTurtle() throws IOException, InterruptedException {
-        return spawnTurtle(false);
+        return spawnTurtle(null,false);
     }
 
     private Integer createTurtle() throws IOException, InterruptedException {
@@ -70,7 +83,7 @@ public class TurtleSpawner implements ITurtleSpawner{
         return newTurtleId;
     }
 
-    private UUID setUpTurtle(Integer id) throws IOException {
+    private void setUpTurtle(Integer id, UUID connectionId) throws IOException {
         // write file on new computer with it's unique web socket address
 
         String setUpFilePath = Path.of(computercraftComputerFolderName, id.toString()).toString();
@@ -78,16 +91,13 @@ public class TurtleSpawner implements ITurtleSpawner{
         File setUpFile = new File(setUpFilePath);
         setUpFile.mkdirs();
         FileWriter setUpFileWriter = new FileWriter(setUpFileName);
-        UUID turtlesUuid = UUID.randomUUID();
-        setUpFileWriter.write("shell.run(\"/rom/programs/websocket_repl.lua "+turtlesUuid.toString()+"\")");
+        setUpFileWriter.write("shell.run(\"/rom/programs/websocket_repl.lua "+connectionId.toString()+"\")");
         setUpFileWriter.close();
 
         File ackFile = new File(commandComputerAckFileName);
         if (!ackFile.createNewFile()) {
             throw new IOException("Failed to create ack file.");
         }
-
-        return turtlesUuid;
     }
 
 }
