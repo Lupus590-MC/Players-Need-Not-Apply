@@ -126,7 +126,7 @@ end
 mode = mode:lower()
 world = world:lower()
 
-if world ~= "overworld" or world ~= "other" then
+if world ~= "overworld" and world ~= "other" then
 	printUsage()
 	return
 end
