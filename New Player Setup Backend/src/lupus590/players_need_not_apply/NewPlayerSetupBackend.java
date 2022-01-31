@@ -10,8 +10,8 @@ public class NewPlayerSetupBackend {
     //TODO: could do with a config for this stuff
     private static final Path computercraftComputerFolderPath = Path.of("C:\\Games\\Minecraft\\MultiMC\\instances\\Players Need Not Apply - 1.16\\.minecraft\\saves\\New World\\computercraft\\computer");
     private static final Integer overworldCommandComputerId = 6;
-    private static final Integer netherCommandComputerId = 6;
-    private static final Integer endCommandComputerId = 6;
+    private static final Integer netherCommandComputerId = 45;
+    private static final Integer endCommandComputerId = 45;
 
     private static final String rootConnectionUrl = "file:///C:/MyStuff/Projects/CC/Players-Need-Not-Apply/Web%20Dashboard/index.html?ws=";
 
