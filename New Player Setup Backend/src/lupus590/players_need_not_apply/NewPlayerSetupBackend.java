@@ -7,23 +7,33 @@ public class NewPlayerSetupBackend {
     private static final boolean useMockTurtleSpawner = true;
     private static  final boolean useCli = true;
 
+    //TODO: could do with a config for this stuff
     private static final Path computercraftComputerFolderPath = Path.of("C:\\Games\\Minecraft\\MultiMC\\instances\\Players Need Not Apply - 1.16\\.minecraft\\saves\\New World\\computercraft\\computer");
-    private static final Integer commandComputerId = 6;
+    private static final Integer overworldCommandComputerId = 6;
+    private static final Integer netherCommandComputerId = 6;
+    private static final Integer endCommandComputerId = 6;
 
     private static final String rootConnectionUrl = "file:///C:/MyStuff/Projects/CC/Players-Need-Not-Apply/Web%20Dashboard/index.html?ws=";
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        ITurtleSpawner turtleSpawner;
+        ITurtleSpawner overworldTurtleSpawner;
+        ITurtleSpawner netherTurtleSpawner;
+        ITurtleSpawner endTurtleSpawner;
+
         if(useMockTurtleSpawner){
-            turtleSpawner = new MockTurtleSpawner();
+            overworldTurtleSpawner = new MockTurtleSpawner("overworld");
+            netherTurtleSpawner = new MockTurtleSpawner("nether");
+            endTurtleSpawner = new MockTurtleSpawner("end");
         }
         else{
-            turtleSpawner = new TurtleSpawner(computercraftComputerFolderPath, commandComputerId);
+            overworldTurtleSpawner = new TurtleSpawner(computercraftComputerFolderPath, overworldCommandComputerId);
+            netherTurtleSpawner = new TurtleSpawner(computercraftComputerFolderPath, netherCommandComputerId);
+            endTurtleSpawner = new TurtleSpawner(computercraftComputerFolderPath, endCommandComputerId);
         }
 
         if(useCli){
-            CommandLineInterface cli = new CommandLineInterface(turtleSpawner, rootConnectionUrl, computercraftComputerFolderPath, commandComputerId);
+            CommandLineInterface cli = new CommandLineInterface(rootConnectionUrl, overworldTurtleSpawner, netherTurtleSpawner, endTurtleSpawner);
             cli.run();
         }
         else{

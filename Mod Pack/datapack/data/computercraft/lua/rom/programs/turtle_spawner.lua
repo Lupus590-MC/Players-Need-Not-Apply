@@ -102,6 +102,8 @@ local function listenOverworld()
     end
 end
 
+-- TODO: message the bot to make a nether/end turtle, it can ask for the WS and tell the user where to find it
+-- maybe have the control center message the bot?
 local function listenOther()
 
 end

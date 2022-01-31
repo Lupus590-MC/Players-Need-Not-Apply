@@ -6,35 +6,41 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class CommandLineInterface {
-
-    private final Path computercraftComputerFolderPath;
-    private final Integer commandComputerId;
-
     private final String rootConnectionUrl;
 
-    private final ITurtleSpawner turtleSpawner;
+    private final ITurtleSpawner overworldTurtleSpawner;
+    private final ITurtleSpawner netherTurtleSpawner;
+    private final ITurtleSpawner endTurtleSpawner;
 
-    public CommandLineInterface(ITurtleSpawner turtleSpawner, String rootConnectionUrl, Path computercraftComputerFolderPath, Integer commandComputerId) {
-        this.turtleSpawner = turtleSpawner;
+    public CommandLineInterface(String rootConnectionUrl, ITurtleSpawner overworldTurtleSpawner, ITurtleSpawner netherTurtleSpawner, ITurtleSpawner endTurtleSpawner) {
+        this.overworldTurtleSpawner = overworldTurtleSpawner;
+        this.netherTurtleSpawner = netherTurtleSpawner;
+        this.endTurtleSpawner = endTurtleSpawner;
         this.rootConnectionUrl = rootConnectionUrl;
-        this.computercraftComputerFolderPath = computercraftComputerFolderPath;
-        this.commandComputerId = commandComputerId;
     }
 
     public void run() throws IOException, InterruptedException {
         Scanner keyboardScanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("press enter to spawn new turtle (q to quit)"); // wait for signal to spawn new turtle
+            System.out.println("(o)verworld, (n)ether, (e)nd, (q)uit)"); // wait for signal to spawn new turtle
             while(!keyboardScanner.hasNextLine()){
                 //TODO: don't busy wait
             }
             String input = keyboardScanner.nextLine();
+            UUID newPlayersUUID;
             if (input.equalsIgnoreCase("q")){
                 return;
+            } else if (input.equalsIgnoreCase("o")){
+                newPlayersUUID = overworldTurtleSpawner.spawnTurtle(true);
+            } else if (input.equalsIgnoreCase("n")){
+                newPlayersUUID = netherTurtleSpawner.spawnTurtle(true);
+            } else if (input.equalsIgnoreCase("e")) {
+                newPlayersUUID = endTurtleSpawner.spawnTurtle(true);
+            } else {
+                continue;
             }
 
-            UUID newPlayersUUID = turtleSpawner.spawnTurtle(true);
             if (newPlayersUUID != null) {
                 System.out.println("new turtle's connection url: "+rootConnectionUrl+newPlayersUUID.toString()); // tell player their UUID
             } else {
