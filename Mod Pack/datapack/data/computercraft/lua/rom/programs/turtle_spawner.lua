@@ -102,10 +102,21 @@ local function listenOverworld()
     end
 end
 
--- TODO: message the bot to make a nether/end turtle, it can ask for the WS and tell the user where to find it
--- maybe have the control center message the bot?
 local function listenOther()
-
+	while true do
+		fs.delete("request")
+		fs.delete("response")
+		fs.delete("ack")
+		repeat
+			sleep() -- TODO: better wait, this is probably going to be sleeping here most of the time, perhaps use a websocket to wake it up?
+		until fs.exists("request")
+		--TODO: take coords of a chest with resources in
+		local turtleID = spawnOtherTurtle()
+		io.open("response", "w"):write(turtleID):close()
+		repeat
+			sleep()
+		until fs.exists("ack")
+	end
 end
 
 local function printUsage()
