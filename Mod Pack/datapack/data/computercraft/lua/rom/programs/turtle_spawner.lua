@@ -102,7 +102,19 @@ local function listenOverworld()
     end
 end
 
-local function listenOther()
+local function listenOther(world)
+	local requiredResources = {
+		-- world = {[itemId = count]}
+		nether = {
+			["minecraft:obsidian"] = 8,
+			["minecraft:flint_and_steel"] = 1 -- TODO: damage these?
+		},
+		ender = {["minecraft:ender_eye"] = 12}
+	}
+
+	assert(requiredResources[world], "invalid world")
+	requiredResources = requiredResources[world]
+
 	while true do
 		fs.delete("request")
 		fs.delete("response")
@@ -110,12 +122,31 @@ local function listenOther()
 		repeat
 			sleep() -- TODO: better wait, this is probably going to be sleeping here most of the time, perhaps use a websocket to wake it up?
 		until fs.exists("request")
-		--TODO: take coords of a chest with resources in
-		local turtleID = spawnOtherTurtle()
-		io.open("response", "w"):write(turtleID):close()
-		repeat
-			sleep()
-		until fs.exists("ack")
+		local requestFile = fs.open("request", "r")
+		local ok, request = pcall(textutils.unserialise, requestFile.readAll());
+		requestFile.close()
+		if ok then
+			--TODO: take coords of a chest with resources in
+			local offerings = commands.getBlockInfo(request.x, request.y, request.z, request.dim) --TODO: sanity checks on request
+			-- Can't set block across dim, may have to ask the local command computer to do it
+            -- Could just not consume the items but still require them
+			local resourcesValid = false
+			if offerings and offerings.nbt and offerings.nbt.items then
+
+			end
+
+			if resourcesValid then
+				local turtleID = spawnOtherTurtle()
+				io.open("response", "w"):write(turtleID):close()
+				repeat
+					sleep()
+				until fs.exists("ack")
+			else
+				io.open("response", "w"):write("Chest not located or doesn't contain the right items."):close() -- TODO: better message
+			end
+		else
+			io.open("response", "w"):write("error reading request file"):close()
+		end
 	end
 end
 
@@ -123,7 +154,8 @@ local function printUsage()
     print(arg[0].." test overworld")
     print(arg[0].." test other")
     print(arg[0].." listen overworld")
-    print(arg[0].." listen other")
+    print(arg[0].." listen nether")
+    print(arg[0].." listen ender")
 end
 
 local mode = arg[1]
@@ -137,23 +169,27 @@ end
 mode = mode:lower()
 world = world:lower()
 
-if world ~= "overworld" and world ~= "other" then
-	printUsage()
-	return
-end
-
-
 if mode == "test" then
+	if world ~= "overworld" and world ~= "other" then
+		printUsage()
+		return
+	end
+
 	if world == "overworld" then
 		print("turtleID: "..spawnOverworldTurtle())
 	elseif world == "other" then
 		print("turtleID: "..spawnOtherTurtle())
 	end
 elseif mode == "listen" then
+	if world ~= "overworld" and world ~= "nether" and world ~= "ender" then
+		printUsage()
+		return
+	end
+
 	if world == "overworld" then
 		listenOverworld()
-	elseif world == "other" then
-		listenOther()
+	elseif world == "nether" or world == "ender" then
+		listenOther(world)
 	end
 else
 	printUsage()
