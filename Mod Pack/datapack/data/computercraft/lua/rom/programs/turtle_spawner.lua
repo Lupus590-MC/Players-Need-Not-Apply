@@ -136,7 +136,7 @@ local function listenOther(world)
 			end
 
 			if resourcesValid then
-				local turtleID = spawnOtherTurtle()
+				local turtleID = spawnOtherTurtle() -- If we delete the items in the chest then we could accept/require a turtle and copy its NBT
 				io.open("response", "w"):write(turtleID):close()
 				repeat
 					sleep()
