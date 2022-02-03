@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class NewPlayerSetupBackend {
-    private static final boolean useMockTurtleSpawner = true;
+    private static final boolean useMockTurtleSpawner = false;
     private static  final boolean useCli = true;
 
     //TODO: could do with a config for this stuff

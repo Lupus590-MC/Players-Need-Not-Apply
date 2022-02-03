@@ -1,6 +1,7 @@
 package lupus590.players_need_not_apply;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -44,16 +45,68 @@ public class CommandLineInterface {
         }
     }
 
+    private Coords getInvCoordsFromSystemIn(){
+        Coords coords = new Coords();
+        //TODO: quite a bit of duplicated code here
+        while (true) {
+            System.out.println("Input the x coord of inventory with offerings");
+            String input = keyboardScanner.nextLine();
+            try{
+                coords.x = Integer.parseInt(input);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Please input an integer");
+            }
+        }
+
+        while (true) {
+            System.out.println("Input the y coord of inventory with offerings");
+            String input = keyboardScanner.nextLine();
+            try{
+                coords.y = Integer.parseInt(input);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Please input an integer");
+            }
+        }
+
+        while (true) {
+            System.out.println("Input the z coord of inventory with offerings");
+            String input = keyboardScanner.nextLine();
+            try{
+                coords.z = Integer.parseInt(input);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Please input an integer");
+            }
+        }
+
+        while (true) {
+            System.out.println("Input the dimension of inventory with offerings [(o)verworld | (n)ether | (e)nd]");
+            String input = keyboardScanner.nextLine().toLowerCase(Locale.ROOT);
+            if (input.equals("overworld") || input.equals("o") || input.equals("nether") || input.equals("n") || input.equals("end") || input.equals("e")) {
+                coords.dim = input;
+                break;
+            } else {
+                System.out.println("Invalid dimension");
+            }
+        }
+
+        return coords;
+    }
+
     private UUID spawnTurtle(String world) throws IOException, InterruptedException {
         UUID connectionUUID;
         if (world.equalsIgnoreCase("o")){
             connectionUUID = overworldTurtleSpawner.spawnTurtle(true);
         } else if (world.equalsIgnoreCase("n")){
             connectionUUID = getUUIDFromSystemIn();
-            connectionUUID = netherTurtleSpawner.spawnTurtle(connectionUUID,true);
+            Coords coords = getInvCoordsFromSystemIn();
+            connectionUUID = netherTurtleSpawner.spawnTurtle(connectionUUID, coords,true);
         } else if (world.equalsIgnoreCase("e")) {
             connectionUUID = getUUIDFromSystemIn();
-            connectionUUID = endTurtleSpawner.spawnTurtle(connectionUUID,true);
+            Coords coords = getInvCoordsFromSystemIn();
+            connectionUUID = endTurtleSpawner.spawnTurtle(connectionUUID, coords,true);
         } else {
             throw new RuntimeException("Unknown world.");
         }

@@ -113,7 +113,7 @@ local function listenOther(world)
 	}
 
 	assert(requiredResources[world], "invalid world")
-	requiredResources = requiredResources[world]
+	local thisWorldResources = requiredResources[world]
 
 	while true do
 		fs.delete("request")
@@ -123,16 +123,46 @@ local function listenOther(world)
 			sleep() -- TODO: better wait, this is probably going to be sleeping here most of the time, perhaps use a websocket to wake it up?
 		until fs.exists("request")
 		local requestFile = fs.open("request", "r")
-		local ok, request = pcall(textutils.unserialise, requestFile.readAll());
+		local requestData = requestFile.readAll()
 		requestFile.close()
-		if ok then
-			--TODO: take coords of a chest with resources in
-			local offerings = commands.getBlockInfo(request.x, request.y, request.z, request.dim) --TODO: sanity checks on request
-			-- Can't set block across dim, may have to ask the local command computer to do it
-            -- Could just not consume the items but still require them
-			local resourcesValid = false
-			if offerings and offerings.nbt and offerings.nbt.items then
+		local ok, offerings = pcall(function()
+			local request = textutils.unserialise(requestData)
 
+			-- convert shorthand to full names
+			request.dim = request.dim == "o" and "overworld" or request.dim
+			request.dim = request.dim == "n" and "nether" or request.dim
+			request.dim = request.dim == "e" and "end" or request.dim
+
+			return commands.getBlockInfo(request.x, request.y, request.z, request.dim)
+		end);
+		if ok then
+			-- TODO: Can't set block across dim, may have to ask the local command computer to do it
+			-- Could just not consume the items but still require them
+
+			-- TODO: this allows empty inventories, it shouldn't
+			local resourcesValid = true
+			if offerings and offerings.nbt and offerings.nbt.items then
+				local countedItems = {}
+				for _, item in pairs(offerings.nbt.items) do
+					if thisWorldResources[item.id] then
+						if not countedItems[item.id] then
+							countedItems[item.id] = 0
+						end
+						countedItems[item.id] = countedItems[item.id] + item.Count
+					end
+				end
+
+				if not next(countedItems) then
+					resourcesValid = false
+					break
+				end
+
+				for item, count in pairs(countedItems) do
+					if thisWorldResources[item] > count then
+						resourcesValid = false
+						break
+					end
+				end
 			end
 
 			if resourcesValid then

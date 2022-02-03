@@ -1,5 +1,6 @@
 package lupus590.players_need_not_apply;
 
+import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -26,13 +27,13 @@ public class TurtleSpawner implements ITurtleSpawner{
 
 
     @Override
-    public UUID spawnTurtle(UUID existingConnection, Boolean printTurtleId) throws IOException, InterruptedException {
+    public UUID spawnTurtle(UUID existingConnection, Coords offeringLocation, Boolean printTurtleId) throws IOException, InterruptedException {
         UUID connectionId = existingConnection;
         if (connectionId == null){
             connectionId = UUID.randomUUID();
         }
         try{
-            Integer turtleID = createTurtle();
+            Integer turtleID = createTurtle(offeringLocation);
             setUpTurtle(turtleID, connectionId);
             if (printTurtleId) {
                 System.out.println("new turtle id: " + turtleID.toString());
@@ -45,23 +46,48 @@ public class TurtleSpawner implements ITurtleSpawner{
     }
 
     @Override
+    public UUID spawnTurtle(UUID existingConnection, Coords offeringLocation) throws IOException, InterruptedException {
+        return spawnTurtle(existingConnection, offeringLocation,false);
+    }
+
+    @Override
+    public UUID spawnTurtle(Coords offeringLocation, Boolean printTurtleId) throws IOException, InterruptedException {
+        return spawnTurtle(null, offeringLocation,false);
+    }
+
+    @Override
+    public UUID spawnTurtle(Coords offeringLocation) throws IOException, InterruptedException {
+        return spawnTurtle(null, offeringLocation,false);
+    }
+
+    @Override
+    public @NotNull UUID spawnTurtle(UUID existingConnection, Boolean printTurtleId) throws IOException, InterruptedException {
+        return spawnTurtle(existingConnection, null,false);
+    }
+
+    @Override
     public UUID spawnTurtle(UUID existingConnection) throws IOException, InterruptedException {
-        return spawnTurtle(existingConnection,false);
+        return spawnTurtle(existingConnection, null,false);
     }
 
     public UUID spawnTurtle(Boolean printTurtleId) throws IOException, InterruptedException {
-        return spawnTurtle(null,printTurtleId);
+        return spawnTurtle(null, null, printTurtleId);
     }
 
     public UUID spawnTurtle() throws IOException, InterruptedException {
-        return spawnTurtle(null,false);
+        return spawnTurtle(null, null,false);
     }
 
-    private Integer createTurtle() throws IOException, InterruptedException {
+    private @NotNull Integer createTurtle(Coords invPos) throws IOException, InterruptedException {
         // make a file on the command computer's root
         File requestFile = new File(commandComputerRequestFileName);
         if (!requestFile.createNewFile()) {
             throw new IOException("Failed to create request file.");
+        }
+        if (invPos != null ){
+            FileWriter myWriter = new FileWriter(commandComputerRequestFileName);
+            myWriter.write(String.format("{ x = %d, y = %d, z = %d, dim = \"%s\" }", invPos.x, invPos.y, invPos.z, invPos.dim));
+            myWriter.close();
         }
 
         // wait for response file
@@ -83,7 +109,7 @@ public class TurtleSpawner implements ITurtleSpawner{
         return newTurtleId;
     }
 
-    private void setUpTurtle(Integer id, UUID connectionId) throws IOException {
+    private void setUpTurtle(@NotNull Integer id, UUID connectionId) throws IOException {
         // write file on new computer with it's unique web socket address
 
         String setUpFilePath = Path.of(computercraftComputerFolderName, id.toString()).toString();
