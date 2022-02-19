@@ -140,7 +140,8 @@ local function listenOther(world)
 			-- Could just not consume the items but still require them
 
 			-- TODO: this allows empty inventories, it shouldn't
-			local resourcesValid = true
+			-- for some reason the below if is not running properly
+			local resourcesValid = false
 			if offerings and offerings.nbt and offerings.nbt.items then
 				local countedItems = {}
 				for _, item in pairs(offerings.nbt.items) do
@@ -154,15 +155,19 @@ local function listenOther(world)
 
 				if not next(countedItems) then
 					resourcesValid = false
+					pretty.pretty_print(countedItems)
 					break
 				end
 
-				for item, count in pairs(countedItems) do
-					if thisWorldResources[item] > count then
+				for item, count in pairs(thisWorldResources) do
+					if countedItems[item] < count then
 						resourcesValid = false
+						pretty.pretty_print(countedItems)
 						break
 					end
 				end
+				resourcesValid = true
+				pretty.pretty_print(countedItems)
 			end
 
 			if resourcesValid then

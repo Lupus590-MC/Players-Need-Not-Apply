@@ -102,6 +102,7 @@ public class TurtleSpawner implements ITurtleSpawner{
         }
 
         // response contains new computer Id
+        // TODO: response might be an error message
         Scanner responseFileReader = new Scanner(responseFile);
         Float newTurtleIdAsFloat = responseFileReader.nextFloat(); // lua writes it as a float
         Integer newTurtleId = newTurtleIdAsFloat.intValue();
