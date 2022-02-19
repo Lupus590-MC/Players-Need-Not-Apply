@@ -142,9 +142,9 @@ local function listenOther(world)
 			-- TODO: this allows empty inventories, it shouldn't
 			-- for some reason the below if is not running properly
 			local resourcesValid = false
-			if offerings and offerings.nbt and offerings.nbt.items then
+			if offerings and offerings.nbt and offerings.nbt.Items then
 				local countedItems = {}
-				for _, item in pairs(offerings.nbt.items) do
+				for _, item in pairs(offerings.nbt.Items) do
 					if thisWorldResources[item.id] then
 						if not countedItems[item.id] then
 							countedItems[item.id] = 0
@@ -156,7 +156,7 @@ local function listenOther(world)
 				if not next(countedItems) then
 					resourcesValid = false
 					pretty.pretty_print(countedItems)
-					break
+					break -- TODO: should this break be here?
 				end
 
 				for item, count in pairs(thisWorldResources) do
