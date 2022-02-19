@@ -44,41 +44,23 @@ public class CommandLineInterface {
         }
     }
 
+    private int getCoord(String coordLabel){
+        while (true) {
+            System.out.println("Input the "+coordLabel+" coord of inventory with offerings");
+            String input = keyboardScanner.nextLine();
+            try{
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Please input an integer");
+            }
+        }
+    }
+
     private Coords getInvCoordsFromSystemIn(){
         Coords coords = new Coords();
-        //TODO: quite a bit of duplicated code here
-        while (true) {
-            System.out.println("Input the x coord of inventory with offerings");
-            String input = keyboardScanner.nextLine();
-            try{
-                coords.x = Integer.parseInt(input);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Please input an integer");
-            }
-        }
-
-        while (true) {
-            System.out.println("Input the y coord of inventory with offerings");
-            String input = keyboardScanner.nextLine();
-            try{
-                coords.y = Integer.parseInt(input);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Please input an integer");
-            }
-        }
-
-        while (true) {
-            System.out.println("Input the z coord of inventory with offerings");
-            String input = keyboardScanner.nextLine();
-            try{
-                coords.z = Integer.parseInt(input);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Please input an integer");
-            }
-        }
+        coords.x = getCoord("x");
+        coords.y = getCoord("y");
+        coords.z = getCoord("z");
 
         while (true) {
             System.out.println("Input the dimension of inventory with offerings [(o)verworld | (n)ether | (e)nd]");
