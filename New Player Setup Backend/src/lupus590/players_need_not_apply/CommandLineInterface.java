@@ -35,7 +35,6 @@ public class CommandLineInterface {
                 return UUID.fromString(uuid);
             } else {
                 UUID uuid;
-                // TODO: pattern match the actual UUID and check for test
                 try{
                     return UUID.fromString(input);
                 } catch(IllegalArgumentException e){
