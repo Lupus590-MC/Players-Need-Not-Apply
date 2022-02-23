@@ -3,7 +3,7 @@
 ## spawn equipment
 
 * chest
-* being nice, helps with crafting
+  * being nice, helps with crafting
 * crafting table
 * pickaxe
 * chunkloader peripheral

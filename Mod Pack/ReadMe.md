@@ -33,9 +33,15 @@
   * smelting efficiently made easier
 * a fluid tank of some kind
   * lava storeage for turtle fuel
-* custom machinary
-  * bucket filler/emptier
+  * custom machinery mod?
+* bucket filler/emptier
+  * custom machinary mod?
 * chunk loader
   * turtles have them but players might want a cheap static chunk loader for bases
   * I was going to provide a command computer service to use vanilla's force load command but crops won't grow in those
     * might be able to find/make a mod that changes this behavour
+* RF power
+* Ore multiplication
+  * custom machinery mod?
+* mythical agriculture
+  * could patch holes with mob farming etc.
