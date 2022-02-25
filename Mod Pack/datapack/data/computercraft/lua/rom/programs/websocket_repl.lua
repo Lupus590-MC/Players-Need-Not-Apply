@@ -1,4 +1,4 @@
-local endpoint = arg[1] or "test"
+local endpoint = arg[1] or "00000000-0000-0000-0000-000000000000"
 local websocketAddress = "ws://localhost:4000/"..endpoint
 local ws, err = http.websocket(websocketAddress)
 if not ws then
