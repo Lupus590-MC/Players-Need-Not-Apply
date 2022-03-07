@@ -45,7 +45,7 @@ local function main()
         if commandAsJsonString then
             local commandData = textutils.unserialiseJSON(commandAsJsonString)
             if commandData and commandData.computerId == os.getComputerID() and commandData.type == "command" then
-                runCommandAndSendResponce(commandData.command)
+                runCommandAndSendResponce(commandData)
 			elseif commandData and commandData.type == "soundOff" then
 				soundOff()
 				print("sounding off")
