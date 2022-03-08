@@ -1,3 +1,5 @@
+Mod Pack/config/jei/bookmarks.ini
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,visualstudiocode,java,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,visualstudiocode,java,intellij
@@ -223,5 +225,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,visualstudiocode,java,intellij
-
-Mod Pack/config/jei/bookmarks.ini
