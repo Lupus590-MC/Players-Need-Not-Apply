@@ -1,6 +1,5 @@
 package lupus590.players_need_not_apply;
 
-import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -61,7 +60,7 @@ public class TurtleSpawner implements ITurtleSpawner{
     }
 
     @Override
-    public @NotNull UUID spawnTurtle(UUID existingConnection, Boolean printTurtleId) throws IOException, InterruptedException {
+    public UUID spawnTurtle(UUID existingConnection, Boolean printTurtleId) throws IOException, InterruptedException {
         return spawnTurtle(existingConnection, null,false);
     }
 
@@ -78,7 +77,7 @@ public class TurtleSpawner implements ITurtleSpawner{
         return spawnTurtle(null, null,false);
     }
 
-    private @NotNull Integer createTurtle(Coords invPos) throws IOException, InterruptedException {
+    private Integer createTurtle(Coords invPos) throws IOException, InterruptedException {
         // make a file on the command computer's root
         File requestFile = new File(commandComputerRequestFileName);
         if (!requestFile.createNewFile()) {
@@ -110,7 +109,7 @@ public class TurtleSpawner implements ITurtleSpawner{
         return newTurtleId;
     }
 
-    private void setUpTurtle(@NotNull Integer id, UUID connectionId) throws IOException {
+    private void setUpTurtle(Integer id, UUID connectionId) throws IOException {
         // write file on new computer with it's unique web socket address
 
         String setUpFilePath = Path.of(computercraftComputerFolderName, id.toString()).toString();
