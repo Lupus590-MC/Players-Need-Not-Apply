@@ -14,13 +14,16 @@ public class CommandLineInterface {
     private final ITurtleSpawner netherTurtleSpawner;
     private final ITurtleSpawner endTurtleSpawner;
 
+    private final boolean requireOfferingsForOtherWorld;
+
     private final Scanner keyboardScanner;
 
-    public CommandLineInterface(String rootConnectionUrl, ITurtleSpawner overworldTurtleSpawner, ITurtleSpawner netherTurtleSpawner, ITurtleSpawner endTurtleSpawner) {
+    public CommandLineInterface(String rootConnectionUrl, ITurtleSpawner overworldTurtleSpawner, ITurtleSpawner netherTurtleSpawner, ITurtleSpawner endTurtleSpawner, boolean requireOfferingsForOtherWorld) {
         this.overworldTurtleSpawner = overworldTurtleSpawner;
         this.netherTurtleSpawner = netherTurtleSpawner;
         this.endTurtleSpawner = endTurtleSpawner;
         this.rootConnectionUrl = rootConnectionUrl;
+        this.requireOfferingsForOtherWorld = requireOfferingsForOtherWorld;
         keyboardScanner = new Scanner(System.in);
     }
 
@@ -57,6 +60,10 @@ public class CommandLineInterface {
     }
 
     private Coords getInvCoordsFromSystemIn(){
+        if (!requireOfferingsForOtherWorld){
+            return null;
+        }
+
         Coords coords = new Coords();
         coords.x = getCoord("x");
         coords.y = getCoord("y");

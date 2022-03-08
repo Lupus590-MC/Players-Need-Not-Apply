@@ -5,7 +5,8 @@ import java.nio.file.Path;
 
 public class NewPlayerSetupBackend {
     private static final boolean useMockTurtleSpawner = false;
-    private static  final boolean useCli = true;
+    private static final boolean useCli = true;
+    private static final boolean requireOfferingsForOtherWorld = false;
 
     //TODO: could do with a config for this stuff
     private static final Path computercraftComputerFolderPath = Path.of("C:\\Games\\Minecraft\\PolyMC\\instances\\Players Need Not Apply - 1.16\\.minecraft\\saves\\New World\\computercraft\\computer");
@@ -33,7 +34,7 @@ public class NewPlayerSetupBackend {
         }
 
         if(useCli){
-            CommandLineInterface cli = new CommandLineInterface(rootConnectionUrl, overworldTurtleSpawner, netherTurtleSpawner, endTurtleSpawner);
+            CommandLineInterface cli = new CommandLineInterface(rootConnectionUrl, overworldTurtleSpawner, netherTurtleSpawner, endTurtleSpawner, requireOfferingsForOtherWorld);
             cli.run();
         }
         else{

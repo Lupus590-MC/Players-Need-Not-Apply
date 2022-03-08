@@ -102,6 +102,57 @@ local function listenOverworld()
     end
 end
 
+local function verifyOfferings()
+	if true then
+		return true -- temp override
+	end
+	local ok, offerings = pcall(function()
+		local request = textutils.unserialise(requestData)
+
+		-- convert shorthand to full names
+		request.dim = request.dim == "o" and "overworld" or request.dim
+		request.dim = request.dim == "n" and "nether" or request.dim
+		request.dim = request.dim == "e" and "end" or request.dim
+
+		return commands.getBlockInfo(request.x, request.y, request.z, request.dim)
+	end);
+	if ok then
+		-- TODO: Can't set block across dim, may have to ask the local command computer to do it
+		-- Could just not consume the items but still require them
+
+		-- TODO: this allows empty inventories, it shouldn't
+		-- for some reason the below if is not running properly
+		local resourcesValid = false
+		if offerings and offerings.nbt and offerings.nbt.Items then
+			local countedItems = {}
+			for _, item in pairs(offerings.nbt.Items) do
+				if thisWorldResources[item.id] then
+					if not countedItems[item.id] then
+						countedItems[item.id] = 0
+					end
+					countedItems[item.id] = countedItems[item.id] + item.Count
+				end
+			end
+
+			if not next(countedItems) then
+				resourcesValid = false
+				pretty.pretty_print(countedItems)
+				--break -- TODO: should this break be here?
+			end
+
+			for item, count in pairs(thisWorldResources) do
+				if countedItems[item] < count then
+					resourcesValid = false
+					pretty.pretty_print(countedItems)
+					break
+				end
+			end
+			resourcesValid = true
+			pretty.pretty_print(countedItems)
+		end
+	end
+end
+
 local function listenOther(world) -- TODO make this simpler
 	local requiredResources = {
 		-- world = {[itemId] = count}
@@ -125,50 +176,9 @@ local function listenOther(world) -- TODO make this simpler
 		local requestFile = fs.open("request", "r")
 		local requestData = requestFile.readAll()
 		requestFile.close()
-		local ok, offerings = pcall(function()
-			local request = textutils.unserialise(requestData)
-
-			-- convert shorthand to full names
-			request.dim = request.dim == "o" and "overworld" or request.dim
-			request.dim = request.dim == "n" and "nether" or request.dim
-			request.dim = request.dim == "e" and "end" or request.dim
-
-			return commands.getBlockInfo(request.x, request.y, request.z, request.dim)
-		end);
-		if ok then
-			-- TODO: Can't set block across dim, may have to ask the local command computer to do it
-			-- Could just not consume the items but still require them
-
-			-- TODO: this allows empty inventories, it shouldn't
-			-- for some reason the below if is not running properly
-			local resourcesValid = false
-			if offerings and offerings.nbt and offerings.nbt.Items then
-				local countedItems = {}
-				for _, item in pairs(offerings.nbt.Items) do
-					if thisWorldResources[item.id] then
-						if not countedItems[item.id] then
-							countedItems[item.id] = 0
-						end
-						countedItems[item.id] = countedItems[item.id] + item.Count
-					end
-				end
-
-				if not next(countedItems) then
-					resourcesValid = false
-					pretty.pretty_print(countedItems)
-					break -- TODO: should this break be here?
-				end
-
-				for item, count in pairs(thisWorldResources) do
-					if countedItems[item] < count then
-						resourcesValid = false
-						pretty.pretty_print(countedItems)
-						break
-					end
-				end
-				resourcesValid = true
-				pretty.pretty_print(countedItems)
-			end
+		local resourcesValid = true
+		if requestData ~= "" or true then
+			verifyOfferings()
 
 			if resourcesValid then
 				local turtleID = spawnOtherTurtle() -- If we delete the items in the chest then we could accept/require a turtle and copy its NBT
