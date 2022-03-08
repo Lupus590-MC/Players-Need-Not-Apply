@@ -5,7 +5,7 @@ import java.nio.file.Path;
 
 public class NewPlayerSetupBackend {
     private static final boolean useMockTurtleSpawner = false;
-    private static final boolean useCli = true;
+    private static final boolean useCli = false;
     private static final boolean requireOfferingsForOtherWorld = false;
 
     //TODO: could do with a config for this stuff
@@ -38,7 +38,8 @@ public class NewPlayerSetupBackend {
             cli.run();
         }
         else{
-            // TODO: discord bot
+            BotInterface bot = new BotInterface(rootConnectionUrl, overworldTurtleSpawner, netherTurtleSpawner, endTurtleSpawner, requireOfferingsForOtherWorld);
+            bot.run();
         }
     }
 }
