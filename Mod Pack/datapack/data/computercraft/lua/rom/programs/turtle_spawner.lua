@@ -102,7 +102,7 @@ local function listenOverworld()
     end
 end
 
-local function verifyOfferings()
+local function verifyOfferings(requestData)
 	if true then
 		return true -- temp override
 	end
@@ -174,11 +174,11 @@ local function listenOther(world) -- TODO make this simpler
 			sleep() -- TODO: better wait, this is probably going to be sleeping here most of the time, perhaps use a websocket to wake it up?
 		until fs.exists("request")
 		local requestFile = fs.open("request", "r")
-		local requestData = requestFile.readAll()
-		requestFile.close()
-		local resourcesValid = true
-		if requestData ~= "" or true then
-			verifyOfferings()
+		if requestFile then
+			local requestData = requestFile.readAll()
+			requestFile.close()
+			local resourcesValid = true
+			resourcesValid = verifyOfferings(requestData)
 
 			if resourcesValid then
 				local turtleID = spawnOtherTurtle() -- If we delete the items in the chest then we could accept/require a turtle and copy its NBT
