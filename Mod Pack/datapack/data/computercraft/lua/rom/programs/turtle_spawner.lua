@@ -102,7 +102,7 @@ local function listenOverworld()
     end
 end
 
-local function verifyOfferings(requestData)
+local function verifyOfferings(requestData, thisWorldResources)
 	if true then
 		return true -- temp override
 	end
@@ -178,7 +178,7 @@ local function listenOther(world) -- TODO make this simpler
 			local requestData = requestFile.readAll()
 			requestFile.close()
 			local resourcesValid = true
-			resourcesValid = verifyOfferings(requestData)
+			resourcesValid = verifyOfferings(requestData, thisWorldResources)
 
 			if resourcesValid then
 				local turtleID = spawnOtherTurtle() -- If we delete the items in the chest then we could accept/require a turtle and copy its NBT
