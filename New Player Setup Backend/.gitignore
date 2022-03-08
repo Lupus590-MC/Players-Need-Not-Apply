@@ -4,8 +4,9 @@
 # Ignore Gradle build output directory
 build
 
-
 discord_token.txt
+
+# plus manual_add in the below auto gen
 
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,visualstudiocode,java,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,visualstudiocode,java,intellij
@@ -131,6 +132,7 @@ fabric.properties
 
 # Package Files #
 *.jar
+!gradle/*.jar # manual_add
 *.war
 *.nar
 *.ear
