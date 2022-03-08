@@ -110,7 +110,7 @@ public class TurtleSpawner implements ITurtleSpawner{
     }
 
     private void setUpTurtle(Integer id, UUID connectionId) throws IOException {
-        // write file on new computer with it's unique web socket address
+        // write file on new computer with its unique web socket address
 
         String setUpFilePath = Path.of(computercraftComputerFolderName, id.toString()).toString();
         String setUpFileName = Path.of(setUpFilePath, "startup.lua").toString();
