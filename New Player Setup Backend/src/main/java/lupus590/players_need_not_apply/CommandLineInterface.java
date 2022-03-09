@@ -73,7 +73,7 @@ public class CommandLineInterface {
             System.out.println("Input the dimension of inventory with offerings [(o)verworld | (n)ether | (e)nd]");
             String input = keyboardScanner.nextLine().toLowerCase(Locale.ROOT);
             if (input.equals("overworld") || input.equals("o") || input.equals("nether") || input.equals("n") || input.equals("end") || input.equals("e")) {
-                coords.dim = input;
+                coords.dim = input; // TODO: convert "overworld" to "o" etc.
                 break;
             } else {
                 System.out.println("Invalid dimension");
