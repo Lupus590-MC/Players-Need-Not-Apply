@@ -1,5 +1,7 @@
 # gameplay notes
 
+* Ask players where they want to spawn?
+
 ## spawn equipment
 
 * chest
