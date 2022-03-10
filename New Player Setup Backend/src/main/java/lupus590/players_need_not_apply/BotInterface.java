@@ -9,20 +9,17 @@ import java.util.UUID;
 
 
 // TODO: discord bot
-public class BotInterface {
-    private final String rootConnectionUrl;
-
-    private final ITurtleSpawner overworldTurtleSpawner;
-    private final ITurtleSpawner netherTurtleSpawner;
-    private final ITurtleSpawner endTurtleSpawner;
-
-    private final boolean requireOfferingsForOtherWorld;
+public class BotInterface extends BaseInterface {
 
     public BotInterface(String rootConnectionUrl, ITurtleSpawner overworldTurtleSpawner, ITurtleSpawner netherTurtleSpawner, ITurtleSpawner endTurtleSpawner, boolean requireOfferingsForOtherWorld) {
         super(rootConnectionUrl, overworldTurtleSpawner, netherTurtleSpawner, endTurtleSpawner, requireOfferingsForOtherWorld);
     }
 
-    private void processCreateRequest(MessageCreateEvent event){
+    private void processCreateRequest(MessageCreateEvent event){ // TODO: clean up code
+        //TODO: input validation
+        //TODO: help
+        //TODO: read and write roles
+        //TODO: use DMs
         System.out.println(event.getMessageContent());
         if (event.getMessageContent().equalsIgnoreCase("!create overworld")) {
             System.out.println("overworld");
