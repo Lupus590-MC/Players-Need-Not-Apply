@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 
-// TODO: discord bot
 public class BotInterface extends BaseInterface {
 
     public BotInterface(String rootConnectionUrl, ITurtleSpawner overworldTurtleSpawner, ITurtleSpawner netherTurtleSpawner, ITurtleSpawner endTurtleSpawner, boolean requireOfferingsForOtherWorld) {
@@ -20,6 +19,8 @@ public class BotInterface extends BaseInterface {
         //TODO: help
         //TODO: read and write roles
         //TODO: use DMs
+            //If we do, could we get the UUID from the message history?
+        //TODO: use slash commands
         System.out.println(event.getMessageContent());
         if (event.getMessageContent().equalsIgnoreCase("!create overworld")) {
             System.out.println("overworld");
