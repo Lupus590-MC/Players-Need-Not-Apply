@@ -2,6 +2,7 @@ package lupus590.players_need_not_apply;
 
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
+import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -18,24 +19,58 @@ public class BotInterface {
     private final boolean requireOfferingsForOtherWorld;
 
     public BotInterface(String rootConnectionUrl, ITurtleSpawner overworldTurtleSpawner, ITurtleSpawner netherTurtleSpawner, ITurtleSpawner endTurtleSpawner, boolean requireOfferingsForOtherWorld) {
-        this.overworldTurtleSpawner = overworldTurtleSpawner;
-        this.netherTurtleSpawner = netherTurtleSpawner;
-        this.endTurtleSpawner = endTurtleSpawner;
-        this.rootConnectionUrl = rootConnectionUrl;
-        this.requireOfferingsForOtherWorld = requireOfferingsForOtherWorld;
+        super(rootConnectionUrl, overworldTurtleSpawner, netherTurtleSpawner, endTurtleSpawner, requireOfferingsForOtherWorld);
     }
 
-    private UUID spawnTurtle(String world, Coords coords, UUID connectionUUID) throws IOException, InterruptedException {
-        if (world.equalsIgnoreCase("o")){
-            connectionUUID = overworldTurtleSpawner.spawnTurtle(true);
-        } else if (world.equalsIgnoreCase("n")){
-            connectionUUID = netherTurtleSpawner.spawnTurtle(connectionUUID, coords,true);
-        } else if (world.equalsIgnoreCase("e")) {
-            connectionUUID = endTurtleSpawner.spawnTurtle(connectionUUID, coords,true);
-        } else {
-            throw new RuntimeException("Unknown world.");
+    private void processCreateRequest(MessageCreateEvent event){
+        System.out.println(event.getMessageContent());
+        if (event.getMessageContent().equalsIgnoreCase("!create overworld")) {
+            System.out.println("overworld");
+            UUID connectionUUID = null;
+            try {
+                connectionUUID = spawnTurtle("o", null, null);
+            }
+            catch (IOException | InterruptedException e) {
+                event.getChannel().sendMessage("An exception was caught while trying to make your turtle.");
+                e.printStackTrace();
+                return;
+            }
+            event.getChannel().sendMessage("Your connection URL: "+rootConnectionUrl+connectionUUID);
         }
-        return connectionUUID;
+        else if (event.getMessageContent().startsWith("!create nether")) {
+            System.out.println("nether");
+            UUID connectionUUID = null;
+            try {
+                String unprocessedUUID = event.getMessageContent().substring(14).trim();
+                System.out.println(unprocessedUUID);
+                connectionUUID = extractUUIDFromURL(unprocessedUUID);
+                connectionUUID = spawnTurtle("n", null, connectionUUID);
+            }
+            catch (IOException | InterruptedException | IllegalArgumentException e) {
+                event.getChannel().sendMessage("An exception was caught while trying to make your turtle.").join();
+                e.printStackTrace();
+                return;
+            }
+            event.getChannel().sendMessage("Your connection URL: "+rootConnectionUrl+connectionUUID);
+        }
+        else if (event.getMessageContent().startsWith("!create end")) {
+            System.out.println("end");
+            UUID connectionUUID = null;
+            try {
+                String unprocessedUUID = event.getMessageContent().substring(11).trim();
+                System.out.println(unprocessedUUID);
+                connectionUUID = extractUUIDFromURL(unprocessedUUID);
+                connectionUUID = spawnTurtle("e", null, connectionUUID);
+            }
+            catch (IOException | InterruptedException | IllegalArgumentException e) {
+                event.getChannel().sendMessage("An exception was caught while trying to make your turtle.");
+                e.printStackTrace();
+                return;
+            }
+            event.getChannel().sendMessage("Your connection URL: "+rootConnectionUrl+connectionUUID);
+        }
+
+
     }
 
     public void run() {
@@ -44,17 +79,8 @@ public class BotInterface {
         DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
 
         api.addMessageCreateListener(event -> {
-            if (event.getMessageContent().equalsIgnoreCase("!create overworld")) {
-                UUID connectionUUID = null;
-                try {
-                    connectionUUID = spawnTurtle("o", null, null);
-                }
-                catch (IOException | InterruptedException e) {
-                    event.getChannel().sendMessage("An exception was caught while trying to make your turtle.");
-                    e.printStackTrace();
-                    return;
-                }
-                event.getChannel().sendMessage("Your connection URL: "+rootConnectionUrl+connectionUUID);
+            if (event.getMessageContent().startsWith("!create ")) {
+                processCreateRequest(event);
             }
         });
 

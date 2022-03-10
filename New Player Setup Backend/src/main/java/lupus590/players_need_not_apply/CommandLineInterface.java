@@ -7,23 +7,12 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CommandLineInterface {
-    private final String rootConnectionUrl;
-
-    private final ITurtleSpawner overworldTurtleSpawner;
-    private final ITurtleSpawner netherTurtleSpawner;
-    private final ITurtleSpawner endTurtleSpawner;
-
-    private final boolean requireOfferingsForOtherWorld;
+public class CommandLineInterface extends BaseInterface {
 
     private final Scanner keyboardScanner;
 
     public CommandLineInterface(String rootConnectionUrl, ITurtleSpawner overworldTurtleSpawner, ITurtleSpawner netherTurtleSpawner, ITurtleSpawner endTurtleSpawner, boolean requireOfferingsForOtherWorld) {
-        this.overworldTurtleSpawner = overworldTurtleSpawner;
-        this.netherTurtleSpawner = netherTurtleSpawner;
-        this.endTurtleSpawner = endTurtleSpawner;
-        this.rootConnectionUrl = rootConnectionUrl;
-        this.requireOfferingsForOtherWorld = requireOfferingsForOtherWorld;
+        super(rootConnectionUrl, overworldTurtleSpawner, netherTurtleSpawner, endTurtleSpawner, requireOfferingsForOtherWorld);
         keyboardScanner = new Scanner(System.in);
     }
 
@@ -31,19 +20,12 @@ public class CommandLineInterface {
         while (true) {
             System.out.println("Input existing connection URL");
             String input = keyboardScanner.nextLine();
-            Pattern pattern = Pattern.compile("\\?ws=(.)*", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(input);
-            if (matcher.find()){
-                String uuid = matcher.group().substring(4);
-                return UUID.fromString(uuid);
-            } else {
-                UUID uuid;
-                try{
-                    return UUID.fromString(input);
-                } catch(IllegalArgumentException e){
-                    System.out.println("Couldn't extract connection UUID, please try again.");
-                }
+            try{
+                return extractUUIDFromURL(input);
+            } catch(IllegalArgumentException e){
+                System.out.println("Couldn't extract connection UUID, please try again.");
             }
+
         }
     }
 
@@ -84,21 +66,13 @@ public class CommandLineInterface {
     }
 
     private UUID spawnTurtle(String world) throws IOException, InterruptedException {
-        UUID connectionUUID;
-        if (world.equalsIgnoreCase("o")){
-            connectionUUID = overworldTurtleSpawner.spawnTurtle(true);
-        } else if (world.equalsIgnoreCase("n")){
+        UUID connectionUUID = null;
+        Coords coords = null;
+        if (world.equalsIgnoreCase("n") || world.equalsIgnoreCase("e")){
             connectionUUID = getUUIDFromSystemIn();
-            Coords coords = getInvCoordsFromSystemIn();
-            connectionUUID = netherTurtleSpawner.spawnTurtle(connectionUUID, coords,true);
-        } else if (world.equalsIgnoreCase("e")) {
-            connectionUUID = getUUIDFromSystemIn();
-            Coords coords = getInvCoordsFromSystemIn();
-            connectionUUID = endTurtleSpawner.spawnTurtle(connectionUUID, coords,true);
-        } else {
-            throw new RuntimeException("Unknown world.");
+            coords = getInvCoordsFromSystemIn();
         }
-        return connectionUUID;
+        return spawnTurtle(world, coords, connectionUUID);
     }
 
     public void run() throws IOException, InterruptedException {
