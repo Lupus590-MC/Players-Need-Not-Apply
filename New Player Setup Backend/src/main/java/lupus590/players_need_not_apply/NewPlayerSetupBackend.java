@@ -5,7 +5,7 @@ import java.nio.file.Path;
 
 public class NewPlayerSetupBackend {
     private static final boolean useMockTurtleSpawner = false;
-    private static final boolean useCli = false;
+    private static final boolean useCli = false; // TODO: fix CLI not taking keyboard input
     private static final boolean requireOfferingsForOtherWorld = false;
 
     //TODO: could do with a config for this stuff

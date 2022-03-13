@@ -27,12 +27,9 @@ public class TurtleSpawner implements ITurtleSpawner{
 
     @Override
     public UUID spawnTurtle(UUID existingConnection, Coords offeringLocation, Boolean printTurtleId) throws IOException, InterruptedException {
-        UUID connectionId = existingConnection;
-        if (connectionId == null){
-            connectionId = UUID.randomUUID();
-        }
+        UUID connectionId = existingConnection != null ? existingConnection : UUID.randomUUID();
         try{
-            Integer turtleID = createTurtle(offeringLocation);
+            Integer turtleID = createTurtle(connectionId, offeringLocation);
             setUpTurtle(turtleID, connectionId);
             if (printTurtleId) {
                 System.out.println("new turtle id: " + turtleID.toString());
@@ -50,16 +47,6 @@ public class TurtleSpawner implements ITurtleSpawner{
     }
 
     @Override
-    public UUID spawnTurtle(Coords offeringLocation, Boolean printTurtleId) throws IOException, InterruptedException {
-        return spawnTurtle(null, offeringLocation,false);
-    }
-
-    @Override
-    public UUID spawnTurtle(Coords offeringLocation) throws IOException, InterruptedException {
-        return spawnTurtle(null, offeringLocation,false);
-    }
-
-    @Override
     public UUID spawnTurtle(UUID existingConnection, Boolean printTurtleId) throws IOException, InterruptedException {
         return spawnTurtle(existingConnection, null,false);
     }
@@ -69,23 +56,20 @@ public class TurtleSpawner implements ITurtleSpawner{
         return spawnTurtle(existingConnection, null,false);
     }
 
-    public UUID spawnTurtle(Boolean printTurtleId) throws IOException, InterruptedException {
-        return spawnTurtle(null, null, printTurtleId);
-    }
-
-    public UUID spawnTurtle() throws IOException, InterruptedException {
-        return spawnTurtle(null, null,false);
-    }
-
-    private Integer createTurtle(Coords invPos) throws IOException, InterruptedException {
+    private Integer createTurtle(UUID connectionId, Coords invPos) throws IOException, InterruptedException {
         // make a file on the command computer's root
         File requestFile = new File(commandComputerRequestFileName);
         if (!requestFile.createNewFile()) {
             throw new IOException("Failed to create request file.");
         }
-        if (invPos != null ){
+        if (invPos == null ){
             FileWriter myWriter = new FileWriter(commandComputerRequestFileName);
-            myWriter.write(String.format("{ x = %d, y = %d, z = %d, dim = \"%s\" }", invPos.x, invPos.y, invPos.z, invPos.dim));
+            myWriter.write(String.format("{ connectionId = \"%s\" }",  connectionId));
+            myWriter.close();
+        }
+        else{
+            FileWriter myWriter = new FileWriter(commandComputerRequestFileName);
+            myWriter.write(String.format("{ x = %d, y = %d, z = %d, dim = \"%s\", connectionId = \"%s\" }", invPos.x, invPos.y, invPos.z, invPos.dim, connectionId));
             myWriter.close();
         }
 

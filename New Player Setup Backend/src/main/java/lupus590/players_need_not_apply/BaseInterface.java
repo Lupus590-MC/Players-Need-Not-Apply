@@ -36,7 +36,7 @@ public abstract class BaseInterface {
 
     protected UUID spawnTurtle(String world, Coords coords, UUID connectionUUID, boolean printTurtleId) throws IOException, InterruptedException {
         if (world.equalsIgnoreCase("o")){
-            connectionUUID = overworldTurtleSpawner.spawnTurtle(printTurtleId);
+            connectionUUID = overworldTurtleSpawner.spawnTurtle(connectionUUID, printTurtleId);
         } else if (world.equalsIgnoreCase("n")){
             connectionUUID = netherTurtleSpawner.spawnTurtle(connectionUUID, coords,printTurtleId);
         } else if (world.equalsIgnoreCase("e")) {

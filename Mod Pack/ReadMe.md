@@ -25,6 +25,9 @@ TODO: https://packwiz.infra.link/
 * Trash Cans
   * easier voiding of items, helps server health
 * JEI and Patchouli are included for development, other mods are required as dependencies
+* KubeJS
+  * prevent turtles from mining each other unless they share an owner
+  * probably other things too
 
 ## consideratios
 

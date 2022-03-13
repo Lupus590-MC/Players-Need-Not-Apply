@@ -1,6 +1,9 @@
 # gameplay notes
 
 * Ask players where they want to spawn?
+* kubejs to stop turtles from siggine each other?
+  * can kube js tell turtle owners apart?
+    * can I set owners with command computers? yes
 
 ## spawn equipment
 

@@ -48,6 +48,53 @@ local function getComputerID(x, y, z)
     end
 end
 
+local turtleTemplates = {
+	overworld = {
+		"computercraft:turtle_advanced",
+		{
+			Fuel = 1000,
+			On = 1,
+			LeftUpgrade = "minecraft:diamond_pickaxe",
+			RightUpgrade = "advancedperipherals:chunky_turtle",
+			Items = {
+				{ id = "minecraft:crafting_table", Count = 1, Slot = 0 },
+				{ id = "minecraft:chest", Count = 1, Slot = 1 },
+				{ id = "minecraft:birch_sapling", Count = 10, Slot = 2},
+				{ id = "minecraft:spruce_sapling", Count = 10, Slot = 3 },
+				{ id = "minecraft:dirt", Count = 1, Slot = 4 },
+				{ id = "computercraft:wireless_modem", Count = 1, Slot = 5 }
+			}
+		}
+	},
+	other = {
+		"computercraft:turtle_normal",
+		{
+			Fuel = 0,
+			On = 1,
+			RightUpgrade = "advancedperipherals:chunky_turtle",
+			Items = {
+				{ id = "digitalitems:item_digitizer", Count = 1, Slot = 0 }
+			}
+		}
+	}
+}
+
+-- https://github.com/Lupus590-CC/CC-Random-Code/blob/master/src/tableMerge.lua
+-- doubles as a table cloner which is what we are using it for
+local function deepTableMerge(...)
+    -- TODO: arg validaton
+    local args = table.pack(...)
+    local merged = {}
+    for _, arg in ipairs(args) do
+        for k, v in pairs(arg) do
+        	if type(v) == "table" then
+        	    v = deepTableMerge(v)
+        	end
+        	merged[k] = v
+        end
+    end
+    return merged
+end
 
 -- the players first turtle spawns in the overworld with:
     -- some fuel
@@ -60,13 +107,20 @@ end
     -- saplings (so that the turtle can set up a renewable source of fuel)
     -- dirt (to plant the saplings on)
     -- wireless modem (since location can be very important, this allows them to use GPS)
-local function spawnOverworldTurtle(x, y, z)
+local function spawnOverworldTurtle(x, y, z, connectionId)
     x = x or "~"
     y = y or "~1"
     z = z or "~"
-    local returns = table.pack(commands.setBlock(x, y, z, "computercraft:turtle_advanced{Fuel: 1000, On: 1, LeftUpgrade:\"minecraft:diamond_pickaxe\", RightUpgrade: \"advancedperipherals:chunky_turtle\", Items: [{ id: \"minecraft:crafting_table\", Count: 1, Slot: 0 }, { id: \"minecraft:chest\", Count: 1, Slot: 1 },{ id: \"minecraft:birch_sapling\", Count: 10, Slot: 2}, { id: \"minecraft:spruce_sapling\", Count:10, Slot: 3 }, { id: \"minecraft:dirt\", Count:1, Slot: 4 }, { id: \"computercraft:wireless_modem\", Count:1, Slot: 5 }]}")) -- TODO: use a table and serialise json?
+	local turtleData = deepTableMerge(turtleTemplates.overworld)
+	local turtleNBT = turtleData[2]
+	turtleNBT.Owner = {
+		Name = connectionId,
+		LowerId = connectionId,
+		UpperId = connectionId
+	}
+    local returns = table.pack(commands.setBlock(x, y, z, turtleData[1]..textutils.serialiseJSON(turtleNBT)))
 
-    --pretty.pretty_print(returns)
+    pretty.pretty_print(returns)
     sleep(1)
     return getComputerID(x, y, z)
 end
@@ -75,13 +129,20 @@ end
 -- not sure if I want to have these spawn with the original turtle and thus always be there for the player (and potentially be forgotten about) or if the player should have to give items to the command commputer (obsidian and eyes of ender for the nether and end respectivly) and then they spawn in that dimention
 -- either way, we provide the absolute minimum to this turtle:
     -- item digitizer (so that the overworld turtle can send items to this turtle)
-local function spawnOtherTurtle(x, y, z)
+local function spawnOtherTurtle(x, y, z, connectionId)
     x = x or "~"
     y = y or "~1"
     z = z or "~"
-    local returns = table.pack(commands.setBlock(x, y, z, "computercraft:turtle_normal{Fuel: 0, On: 1, RightUpgrade: \"advancedperipherals:chunky_turtle\", Items: [{ id: \"digitalitems:item_digitizer\", Count: 1, Slot: 0 }]}")) -- TODO: use a table and serialise json?
+	local turtleData = deepTableMerge(turtleTemplates.other)
+	local turtleNBT = turtleData[2]
+	turtleNBT.Owner = {
+		Name = connectionId,
+		LowerId = connectionId,
+		UpperId = connectionId
+	}
+    local returns = table.pack(commands.setBlock(x, y, z, turtleData[1]..textutils.serialiseJSON(turtleNBT)))
 
-    --pretty.pretty_print(returns)
+    pretty.pretty_print(returns)
     sleep(1)
     return getComputerID(x, y, z)
 end
@@ -94,20 +155,29 @@ local function listenOverworld()
         repeat
             sleep() -- TODO: better wait, this is probably going to be sleeping here most of the time, perhaps use a websocket to wake it up?
         until fs.exists("request")
-        local turtleID = spawnOverworldTurtle()
-        io.open("response", "w"):write(turtleID):close()
-        repeat
-            sleep()
-        until fs.exists("ack")
+        local requestFile = fs.open("request", "r")
+		if requestFile then
+			local requestData = requestFile.readAll()
+			requestFile.close()
+			local request = textutils.unserialise(requestData)
+
+			local connectionId = request.connectionId
+			local turtleID = spawnOverworldTurtle(nil, nil, nil, connectionId) -- If we delete the items in the chest then we could accept/require a turtle and copy its NBT
+			io.open("response", "w"):write(turtleID):close()
+		else
+			io.open("response", "w"):write("error reading request file"):close()
+		end
+		repeat
+			sleep()
+		until fs.exists("ack")
     end
 end
 
-local function verifyOfferings(requestData, thisWorldResources)
+local function verifyOfferings(request, thisWorldResources)
 	if true then
 		return true -- temp override
 	end
 	local ok, offerings = pcall(function()
-		local request = textutils.unserialise(requestData)
 
 		-- convert shorthand to full names
 		request.dim = request.dim == "o" and "overworld" or request.dim
@@ -177,21 +247,24 @@ local function listenOther(world) -- TODO make this simpler
 		if requestFile then
 			local requestData = requestFile.readAll()
 			requestFile.close()
+			local request = textutils.unserialise(requestData)
 			local resourcesValid = true
-			resourcesValid = verifyOfferings(requestData, thisWorldResources)
+			resourcesValid = verifyOfferings(request, thisWorldResources)
+
+			local connectionId = request.connectionId
 
 			if resourcesValid then
-				local turtleID = spawnOtherTurtle() -- If we delete the items in the chest then we could accept/require a turtle and copy its NBT
+				local turtleID = spawnOverworldTurtle(nil, nil, nil, connectionId) -- If we delete the items in the chest then we could accept/require a turtle and copy its NBT
 				io.open("response", "w"):write(turtleID):close()
-				repeat
-					sleep()
-				until fs.exists("ack")
 			else
 				io.open("response", "w"):write("Chest not located or doesn't contain the right items."):close() -- TODO: better message
 			end
 		else
 			io.open("response", "w"):write("error reading request file"):close()
 		end
+		repeat
+			sleep()
+		until fs.exists("ack")
 	end
 end
 
