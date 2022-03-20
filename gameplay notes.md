@@ -1,10 +1,5 @@
 # gameplay notes
 
-* Ask players where they want to spawn?
-* kubejs to stop turtles from siggine each other?
-  * can kube js tell turtle owners apart?
-    * can I set owners with command computers? yes
-
 ## spawn equipment
 
 * chest
@@ -31,3 +26,9 @@
   * command blocks (and thus command computers) can't stop the server
 * maybe another for requesting chunk loading?
 * players by default can break/reprogram another player's turtle, this doesn't sound fair/fun for the player who loses said turtle
+* Ask players where they want to spawn?
+* kubejs to stop turtles from diggine each other?
+  * can kube js tell turtle owners apart?
+    * can I set owners with command computers? yes
+* put command computers outside of the world border
+	* use a world border
