@@ -59,6 +59,7 @@ Everything within the `status` object is optional, nil values should be assumed 
     "computerId": `number`,
     "computerLabel": `string`
 }
+```
 
 Also sent by the CC computer when it boots up. We could send this multiple times, either because we rebooted/reconnected.
 
